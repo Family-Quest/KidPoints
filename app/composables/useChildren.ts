@@ -26,10 +26,12 @@ export const useChildren = () => {
     try {
       const { error: err } = await supabase.from('children').insert(childs)
       if (err) throw err
-    } catch (err) {
+    }
+    catch (err) {
       error.value = err instanceof Error ? err : new Error(String(err))
       throw error.value
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
@@ -44,10 +46,12 @@ export const useChildren = () => {
         .eq('user_id', userId)
       if (err) throw err
       return data || []
-    } catch (err) {
+    }
+    catch (err) {
       error.value = err instanceof Error ? err : new Error(String(err))
       throw error.value
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
@@ -57,6 +61,6 @@ export const useChildren = () => {
     error,
     avatarColors,
     addChildrens,
-    getChildrens
+    getChildrens,
   }
 }

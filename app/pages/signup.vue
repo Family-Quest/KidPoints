@@ -4,7 +4,10 @@
       {{ $t('signup.title') }}
     </h1>
 
-    <form @submit.prevent="onSubmit" class="space-y-4">
+    <form
+      class="space-y-4"
+      @submit.prevent="onSubmit"
+    >
       <!-- Email -->
       <div>
         <input
@@ -13,10 +16,15 @@
           :placeholder="$t('signup.email')"
           :class="[
             'w-full border rounded p-2 focus:outline-none focus:ring-2',
-            errors.email ? 'border-red-500 ring-red-300' : 'focus:ring-purple-400'
+            errors.email ? 'border-red-500 ring-red-300' : 'focus:ring-purple-400',
           ]"
-        />
-        <p v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</p>
+        >
+        <p
+          v-if="errors.email"
+          class="text-red-500 text-sm mt-1"
+        >
+          {{ errors.email }}
+        </p>
       </div>
 
       <!-- Password -->
@@ -26,7 +34,12 @@
           :placeholder="$t('signup.password')"
           :class="{ 'ring-red-300': errors.password }"
         />
-        <p v-if="errors.password" class="text-red-500 text-sm mt-1">{{ errors.password }}</p>
+        <p
+          v-if="errors.password"
+          class="text-red-500 text-sm mt-1"
+        >
+          {{ errors.password }}
+        </p>
       </div>
 
       <!-- Submit -->
@@ -39,13 +52,19 @@
       </button>
     </form>
 
-    <p class="text-sm text-center text-gray-600" v-if="emailSent">
+    <p
+      v-if="emailSent"
+      class="text-sm text-center text-gray-600"
+    >
       {{ $t('signup.emailSent') }}
     </p>
 
     <p class="text-sm text-center">
       {{ $t('signup.alreadyAccount') }}
-      <NuxtLink to="/login" class="text-purple-600 underline hover:opacity-80">
+      <NuxtLink
+        to="/login"
+        class="text-purple-600 underline hover:opacity-80"
+      >
         {{ $t('signup.loginLink') }}
       </NuxtLink>
     </p>
@@ -67,7 +86,7 @@ const { signup } = useAuth()
 // Schema simplifié
 const schema = z.object({
   email: z.string().email(t('signup.errors.email')),
-  password: z.string().min(8, t('signup.errors.password'))
+  password: z.string().min(8, t('signup.errors.password')),
 })
 
 const { handleSubmit, errors } = useForm({ validationSchema: toTypedSchema(schema) })
@@ -80,9 +99,11 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     await signup(values.email, values.password)
     emailSent.value = true
-  } catch (err) {
+  }
+  catch (err) {
     console.error(err)
-  } finally {
+  }
+  finally {
     loading.value = false
   }
 })

@@ -23,30 +23,34 @@ export const useUser = () => {
         .single()
       if (err) throw err
       return data
-    } catch (err) {
+    }
+    catch (err) {
       error.value = err instanceof Error ? err : new Error(String(err))
       throw err
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
 
-const updateUserProfile = async (updates: UserUpdate) => {
-  loading.value = true
-  error.value = null
-  if (!user.value) {
-    throw new Error('User not authenticated')
-  }
-  try {
-    const { error: err } = await supabase
-      .from('users')
-      .update(updates)
-      .eq('id', user.value.id)
+  const updateUserProfile = async (updates: UserUpdate) => {
+    loading.value = true
+    error.value = null
+    if (!user.value) {
+      throw new Error('User not authenticated')
+    }
+    try {
+      const { error: err } = await supabase
+        .from('users')
+        .update(updates)
+        .eq('id', user.value.id)
       if (err) throw err
-    } catch (err) {
+    }
+    catch (err) {
       error.value = err instanceof Error ? err : new Error(String(err))
       throw err
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
@@ -55,6 +59,6 @@ const updateUserProfile = async (updates: UserUpdate) => {
     loading,
     error,
     getUserProfile,
-    updateUserProfile
+    updateUserProfile,
   }
 }

@@ -5,14 +5,17 @@
     </h1>
 
     <!-- Formulaire principal -->
-    <form @submit.prevent="submit" class="space-y-6">
+    <form
+      class="space-y-6"
+      @submit.prevent="submit"
+    >
       <!-- Champ nom -->
       <div>
         <input
           v-model="lastName"
           :placeholder="$t('onboarding.lastName')"
           class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-        />
+        >
       </div>
 
       <!-- Liste enfants -->
@@ -30,7 +33,7 @@
             v-model="child.name"
             :placeholder="$t('onboarding.childName')"
             class="border rounded p-2 flex-1"
-          />
+          >
           <select
             v-model="child.avatar_color"
             class="border rounded p-2"
@@ -45,8 +48,8 @@
           </select>
           <button
             type="button"
-            @click="removeChild(index)"
             class="text-sm text-red-500"
+            @click="removeChild(index)"
           >
             {{ $t('onboarding.removeChild') }}
           </button>
@@ -84,7 +87,7 @@ const { avatarColors, addChildrens } = useChildren()
 const userProfile = await getUserProfile()
 const lastName = ref(userProfile.name || '')
 const childrens = ref<ChildrenInsert[]>([
-  { name: '', avatar_color: 'red', points: 0, level: 1, user_id: userProfile.id }
+  { name: '', avatar_color: 'red', points: 0, level: 1, user_id: userProfile.id },
 ])
 
 const addChild = () => {
@@ -104,9 +107,15 @@ const submit = async () => {
     // Ajout des enfants
     await addChildrens(validChildrens)
     navigateTo('/dashboard')
-  } catch (err: any) {
+  }
+  catch (err: unknown) {
     console.error(err)
-    alert(err.message)
+    if (err instanceof Error) {
+      alert(err.message)
+    }
+    else {
+      alert('Une erreur inattendue est survenue')
+    }
   }
 }
 

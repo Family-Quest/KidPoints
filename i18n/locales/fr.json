@@ -24,13 +24,16 @@
   },
   "dashboard": {
     "title": "Tableau de bord",
-    "loading": "Chargement des données...",
-    "error": "Impossible de récupérer vos informations",
+    "parentInfo": "Informations du parent",
     "name": "Nom",
-    "email": "Adresse email",
-    "childName": "Nom de l'enfant",
-    "childPoints": "Points",
-    "childLevel": "Niveau"
+    "email": "Email",
+    "language": "Langue",
+    "unknown": "Inconnue",
+    "childrenTitle": "Mes enfants",
+    "noChildren": "Aucun enfant n'a encore été ajouté.",
+    "level": "Niveau",
+    "points": "Points",
+    "loading": "Chargement..."
   },
   "about": {
     "title": "À propos de KidPoints",
@@ -55,5 +58,9 @@
     "orange": "Orange 🟠",
     "brown": "Marron 🟤",
     "gray": "Gris ⚪"
+  },
+  "language": {
+    "fr": "Français",
+    "en": "Anglais"
   }
 }

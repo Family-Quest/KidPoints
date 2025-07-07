@@ -1,19 +1,66 @@
 {
   "signup": {
-    "title": "Créer un compte parent",
-    "lastName": "Nom de famille",
-    "email": "Adresse email",
-    "password": "Mot de passe",
-    "confirmPassword": "Confirmez le mot de passe",
-    "submit": "Créer mon compte",
-    "loading": "Création en cours...",
-    "alreadyAccount": "Vous avez déjà un compte ?",
-    "loginLink": "Connectez-vous ici",
+    "title": "Create an account",
+    "email": "Email address",
+    "password": "Password",
+    "submit": "Create my account",
+    "loading": "Creating account...",
+    "emailSent": "A confirmation email has been sent to you.",
+    "alreadyAccount": "Already have an account?",
+    "loginLink": "Log in here",
     "errors": {
-      "lastName": "Veuillez entrer votre nom",
-      "email": "Adresse email invalide",
-      "password": "Le mot de passe doit contenir au moins 8 caractères",
-      "confirmPassword": "Les mots de passe ne correspondent pas"
+      "email": "Invalid email address",
+      "password": "Password must be at least 8 characters long"
     }
+  },
+  "onboarding": {
+    "title": "Welcome!",
+    "lastName": "Your last name",
+    "childrenTitle": "Add your children",
+    "childName": "Child's first name",
+    "addChild": "Add a child",
+    "removeChild": "Remove",
+    "save": "Continue"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "parentInfo": "Parent information",
+    "name": "Name",
+    "email": "Email",
+    "language": "Language",
+    "unknown": "Unknown",
+    "childrenTitle": "My children",
+    "noChildren": "No children have been added yet.",
+    "level": "Level",
+    "points": "Points",
+    "loading": "Loading..."
+  },
+  "about": {
+    "title": "About KidPoints",
+    "description": "KidPoints is an app designed to help families organize children's daily tasks in a fun and motivating way.",
+    "missionTitle": "Our mission",
+    "missionContent": "Encourage autonomy, responsibility, and teamwork in the family through a system of points and rewards.",
+    "featuresTitle": "Features",
+    "features": {
+      "chores": "Custom task management",
+      "rewards": "Reward system",
+      "levels": "Levels and progression",
+      "family": "Multiple children and profiles"
+    }
+  },
+  "colors": {
+    "red": "Red 🔴",
+    "blue": "Blue 🔵",
+    "green": "Green 🟢",
+    "yellow": "Yellow 🟡",
+    "purple": "Purple 🟣",
+    "pink": "Pink 🌸",
+    "orange": "Orange 🟠",
+    "brown": "Brown 🟤",
+    "gray": "Gray ⚪"
+  },
+  "language": {
+    "fr": "French",
+    "en": "English"
   }
 }

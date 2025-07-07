@@ -1,6 +1,8 @@
 <template>
   <div class="text-center space-y-6">
-    <h1 class="text-3xl font-bold text-purple-700">Bienvenue sur KidPoints !</h1>
+    <h1 class="text-3xl font-bold text-purple-700">
+      Bienvenue sur KidPoints !
+    </h1>
 
     <p class="text-gray-700 max-w-xl mx-auto">
       Suivez les tâches de vos enfants, attribuez des points, faites-les évoluer par niveaux… le tout de manière ludique 🌟

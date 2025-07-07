@@ -4,10 +4,10 @@
       <input
         :type="show ? 'text' : 'password'"
         :value="modelValue"
-        @input="onInput"
         :placeholder="placeholder"
         class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-10"
-      />
+        @input="onInput"
+      >
       <button
         type="button"
         class="absolute right-2 top-2 text-gray-500 text-sm"

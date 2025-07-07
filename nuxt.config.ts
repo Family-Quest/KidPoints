@@ -1,9 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/test-utils',
+    '@nuxtjs/supabase',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/i18n',
+  ],
   devtools: {
     vueDevTools: true,
-    enabled: true
+    enabled: true,
   },
   runtimeConfig: {
     public: {
@@ -11,8 +17,11 @@ export default defineNuxtConfig({
       supabaseKey: process.env.SUPABASE_KEY,
     },
   },
-  supabase: {
-    redirect: false,
+  compatibilityDate: '2025-05-15',
+  eslint: {
+    config: {
+      stylistic: true,
+    },
   },
   i18n: {
     bundle: {
@@ -22,13 +31,9 @@ export default defineNuxtConfig({
     locales: [
       { code: 'fr', name: 'Français', file: 'fr.json' },
       { code: 'en', name: 'English', file: 'en.json' },
-    ]
+    ],
   },
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/test-utils',
-    '@nuxtjs/supabase',
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/i18n'
-  ]
+  supabase: {
+    redirect: false,
+  },
 })
