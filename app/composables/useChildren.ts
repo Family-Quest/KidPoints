@@ -1,5 +1,4 @@
-import { ref } from 'vue'
-import type { ChildrenInsert } from '~/types/children'
+import type { ChildrenInsert, ChildrenUpdate } from '~/types/children'
 import type { Database } from '~/types/database'
 
 export const useChildren = () => {
@@ -56,11 +55,51 @@ export const useChildren = () => {
     }
   }
 
+  const deleteChildren = async (id: string) => {
+    loading.value = true
+    error.value = null
+    try {
+      const { error: err } = await supabase
+        .from('children')
+        .delete()
+        .eq('id', id)
+      if (err) throw err
+    }
+    catch (err) {
+      error.value = err instanceof Error ? err : new Error(String(err))
+      throw error.value
+    }
+    finally {
+      loading.value = false
+    }
+  }
+
+  const updateChildren = async (id: string, children: ChildrenUpdate) => {
+    loading.value = true
+    error.value = null
+    try {
+      const { error: err } = await supabase
+        .from('children')
+        .update(children)
+        .eq('id', id)
+      if (err) throw err
+    }
+    catch (err) {
+      error.value = err instanceof Error ? err : new Error(String(err))
+      throw error.value
+    }
+    finally {
+      loading.value = false
+    }
+  }
+
   return {
     loading,
     error,
     avatarColors,
     addChildrens,
     getChildrens,
+    updateChildren,
+    deleteChildren,
   }
 }

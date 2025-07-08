@@ -19,6 +19,10 @@
             to="/dashboard"
             class="hover:underline"
           >Dashboard</NuxtLink>
+          <NuxtLink
+            to="/parent"
+            class="hover:underline"
+          >Mon Profil</NuxtLink>
           <button
             class="bg-white text-purple-600 px-3 py-1 rounded hover:bg-purple-100"
             @click="onLogout"

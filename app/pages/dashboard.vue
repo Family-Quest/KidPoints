@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-5xl flex gap-4 justify-center">
+  <div class="max-w-5xl flex flex-col md:flex-row gap-4 md:justify-center">
     <!-- Profil du parent -->
     <section class="bg-white rounded-xl shadow p-6">
       <h2 class="text-xl font-bold text-purple-600 mb-4">
@@ -28,7 +28,7 @@
     </section>
 
     <!-- Liste des enfants -->
-    <section class="bg-white rounded-xl shadow p-6">
+    <section class="bg-white rounded-xl shadow p-6 md:min-w-[300px]">
       <h2 class="text-xl font-bold text-purple-600 mb-4">
         {{ $t('dashboard.childrenTitle') }}
       </h2>
