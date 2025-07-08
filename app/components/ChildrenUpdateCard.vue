@@ -37,7 +37,7 @@
     </div>
 
     <!-- Boutons -->
-    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+    <div class="flex justify-between items-center pt-4 border-t border-gray-200">
       <button
         class="text-sm text-red-500 hover:text-red-700 transition"
         @click="onRemove"

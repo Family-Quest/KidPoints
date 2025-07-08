@@ -79,5 +79,17 @@
   "language": {
     "fr": "Français",
     "en": "Anglais"
+  },
+  "task": {
+    "title": "Titre de la tâche",
+    "description": "Description",
+    "points": "Points",
+    "status": "Statut",
+    "status_todo": "À faire",
+    "status_in_progress": "En cours",
+    "status_done": "Terminée",
+    "add": "Ajouter une tâche",
+    "save": "Enregistrer",
+    "delete": "Supprimer"
   }
 }

@@ -183,26 +183,29 @@ export type Database = {
       tasks: {
         Row: {
           created_by: string
-          description: string | null
+          description: string
           id: string
           is_active: boolean
           points: number
+          status: Database["public"]["Enums"]["task_status"]
           title: string
         }
         Insert: {
           created_by: string
-          description?: string | null
-          id?: string
-          is_active?: boolean
-          points: number
-          title: string
-        }
-        Update: {
-          created_by?: string
-          description?: string | null
+          description?: string
           id?: string
           is_active?: boolean
           points?: number
+          status?: Database["public"]["Enums"]["task_status"]
+          title?: string
+        }
+        Update: {
+          created_by?: string
+          description?: string
+          id?: string
+          is_active?: boolean
+          points?: number
+          status?: Database["public"]["Enums"]["task_status"]
           title?: string
         }
         Relationships: [
@@ -224,6 +227,7 @@ export type Database = {
     }
     Enums: {
       languages: "fr" | "en"
+      task_status: "todo" | "in_progress" | "done"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -352,6 +356,7 @@ export const Constants = {
   public: {
     Enums: {
       languages: ["fr", "en"],
+      task_status: ["todo", "in_progress", "done"],
     },
   },
 } as const

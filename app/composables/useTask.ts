@@ -19,7 +19,7 @@ export const useTask = () => {
         const req = await supabase
           .from('tasks')
           .select('*')
-          .eq('user_id', userRef.value.id)
+          .eq('created_by', userRef.value.id)
         return req.data as Task[]
       },
     })
@@ -32,7 +32,7 @@ export const useTask = () => {
         if (!userRef.value?.id) throw new Error('User ID is required for creating tasks')
         const req = await supabase
           .from('tasks')
-          .insert([{ ...task, user_id: userRef.value.id }])
+          .insert(task)
           .select()
           .single()
         return req
@@ -46,15 +46,13 @@ export const useTask = () => {
   function useUpdateTaskMutation(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
     return useMutation({
-      mutationFn: async ({ taskId, task }: { taskId: string, task: TaskUpdate }) => {
+      mutationFn: async (task: TaskUpdate) => {
         if (!userRef.value?.id) throw new Error('User ID is required for updating tasks')
+        if (!task.id) throw new Error('Task ID is required for updating tasks')
         const req = await supabase
           .from('tasks')
           .update(task)
-          .eq('id', taskId)
-          .eq('user_id', userRef.value.id)
-          .select()
-          .single()
+          .eq('id', task.id)
         return req
       },
       onSuccess: () => {
@@ -72,7 +70,6 @@ export const useTask = () => {
           .from('tasks')
           .delete()
           .eq('id', taskId)
-          .eq('user_id', userRef.value.id)
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
