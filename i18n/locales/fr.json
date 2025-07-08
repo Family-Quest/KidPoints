@@ -20,7 +20,7 @@
     "childName": "Prénom de l'enfant",
     "addChild": "Ajouter un enfant",
     "removeChild": "Supprimer",
-    "save": "Continuer"
+    "save": "Enregister"
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -51,7 +51,11 @@
   "parent": {
     "profile": "Profil",
     "children": "Enfants",
-    "tasks": "Tâches"
+    "tasks": "Tâches",
+    "child": {
+      "points": "Points",
+      "level": "Niveau"
+    }
   },
   "form": {
     "name": "Nom",

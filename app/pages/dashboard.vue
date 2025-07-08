@@ -6,7 +6,7 @@
         {{ $t('dashboard.parentInfo') }}
       </h2>
       <div
-        v-if="loading"
+        v-if="isLoadingParent"
         class="text-gray-500"
       >
         {{ $t('dashboard.loading') }}
@@ -21,9 +21,9 @@
         v-else
         class="space-y-2"
       >
-        <p><strong>{{ $t('dashboard.name') }}:</strong> {{ userProfile?.name }}</p>
-        <p><strong>{{ $t('dashboard.email') }}:</strong> {{ userProfile?.email }}</p>
-        <p><strong>{{ $t('dashboard.language') }}:</strong> {{ $t(`language.${userProfile?.language}`) || $t('dashboard.unknown') }}</p>
+        <p><strong>{{ $t('dashboard.name') }}:</strong> {{ parent?.name }}</p>
+        <p><strong>{{ $t('dashboard.email') }}:</strong> {{ user?.email }}</p>
+        <p><strong>{{ $t('dashboard.language') }}:</strong> {{ $t(`language.${parent?.language}`) || $t('dashboard.unknown') }}</p>
       </div>
     </section>
 
@@ -32,15 +32,20 @@
       <h2 class="text-xl font-bold text-purple-600 mb-4">
         {{ $t('dashboard.childrenTitle') }}
       </h2>
-
       <div
-        v-if="childrens.length === 0"
+        v-if="isLoadingChildrens"
+        class="text-gray-500"
+      >
+        {{ $t('dashboard.loading') }}
+      </div>
+      <div
+        v-else-if="childrens?.length === 0"
         class="text-gray-500 italic"
       >
         {{ $t('dashboard.noChildren') }}
       </div>
 
-      <div class="grid gap-4 min-[]">
+      <div class="grid gap-4">
         <div
           v-for="child in childrens"
           :key="child.id"
@@ -69,19 +74,15 @@
 </template>
 
 <script setup lang="ts">
-import { useUser } from '~/composables/useUser'
-import { useChildren } from '~/composables/useChildren'
-import type { UserProfile } from '~/types/user'
-import type { Children } from '~/types/children'
+const { useParentQuery } = useParent()
+const { useChildrenQuery } = useChildren()
 
-const { getUserProfile } = useUser()
-const { getChildrens } = useChildren()
-
-const userProfile = ref<UserProfile | null>(null)
 const user = useSupabaseUser()
-const childrens = ref<Children[]>([])
-const loading = ref(true)
-const error = ref<string | null>(null)
+
+const { data: parent, isLoading: isLoadingParent, error: errorParent } = useParentQuery(user)
+const { data: childrens, isLoading: isLoadingChildrens, error: errorChildrens } = useChildrenQuery(user)
+
+const error = computed(() => errorParent.value?.message || errorChildrens.value?.message || null)
 
 const getColorFromName = (color: string | null) => {
   const map: Record<string, string> = {
@@ -97,30 +98,6 @@ const getColorFromName = (color: string | null) => {
   }
   return map[color || 'gray'] || '#D1D5DB'
 }
-
-onMounted(async () => {
-  try {
-    const publicUser = await getUserProfile()
-    userProfile.value = {
-      ...publicUser,
-      email: user.value?.email || '',
-    }
-
-    const kids = await getChildrens(publicUser.id)
-    childrens.value = kids
-  }
-  catch (err: unknown) {
-    if (err instanceof Error) {
-      error.value = err.message || 'Erreur inconnue'
-    }
-    else {
-      error.value = 'Erreur inconnue'
-    }
-  }
-  finally {
-    loading.value = false
-  }
-})
 
 definePageMeta({ middleware: 'auth', layout: 'parent' })
 </script>

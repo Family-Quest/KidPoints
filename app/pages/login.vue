@@ -51,25 +51,19 @@
 </template>
 
 <script setup lang="ts">
-const { getUserProfile } = useUser()
+const { useParentQuery } = useParent()
+
 const user = useSupabaseUser()
-const userProfile = ref()
+
+const { data: parent } = useParentQuery(user)
 
 function redirect() {
-  if (!userProfile.value.name) {
-    navigateTo('/onboarding')
-  }
-  else {
-    navigateTo('/dashboard')
-  }
+  if (!parent.value?.name) navigateTo('/onboarding')
+  navigateTo('/dashboard')
 }
 
 onMounted(async () => {
-  if (user.value) {
-    // If user is already logged in, redirect to dashboard
-    userProfile.value = await getUserProfile()
-    redirect()
-  }
+  if (user.value) redirect()
 })
 
 const email = ref('')
@@ -84,7 +78,6 @@ const handleLogin = async () => {
 
   try {
     await login(email.value, password.value)
-    userProfile.value = await getUserProfile()
     redirect()
   }
   catch (err: unknown) {

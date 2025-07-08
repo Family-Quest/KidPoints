@@ -4,7 +4,6 @@
       {{ $t('onboarding.title') }}
     </h1>
 
-    <!-- Formulaire principal -->
     <form
       class="space-y-6"
       @submit.prevent="submit"
@@ -12,7 +11,7 @@
       <!-- Champ nom -->
       <div>
         <input
-          v-model="lastName"
+          v-model="parent.name"
           :placeholder="$t('onboarding.lastName')"
           class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
         >
@@ -30,12 +29,12 @@
           class="border p-4 rounded bg-gray-50 space-y-2 flex gap-2"
         >
           <input
-            v-model="child.name"
+            v-model="child.value.name"
             :placeholder="$t('onboarding.childName')"
             class="border rounded p-2 flex-1"
           >
           <select
-            v-model="child.avatar_color"
+            v-model="child.value.avatar_color"
             class="border rounded p-2"
           >
             <option
@@ -68,7 +67,7 @@
       <button
         type="submit"
         class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded"
-        :disabled="loading"
+        :disabled="isPending"
       >
         {{ $t('onboarding.save') }}
       </button>
@@ -77,47 +76,67 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useUser } from '~/composables/useUser'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useField, useFieldArray, useForm } from 'vee-validate'
+import { z } from 'zod'
+import { childrensInsertSchema } from '~/types/children'
 import type { ChildrenInsert } from '~/types/children'
+import { parentUpdateSchema } from '~/types/parent'
+import type { ParentUpdate } from '~/types/parent'
 
-const { updateUserProfile, loading, getUserProfile } = useUser()
-const { avatarColors, addChildrens } = useChildren()
+const { useParentMutation, useParentQuery } = useParent()
+const { avatarColors, useAddChildrenMutation, useChildrenQuery } = useChildren()
 
-const userProfile = await getUserProfile()
-const lastName = ref(userProfile.name || '')
-const childrens = ref<ChildrenInsert[]>([
-  { name: '', avatar_color: 'red', points: 0, level: 1, user_id: userProfile.id },
-])
+const user = useSupabaseUser()
+const { data: currentParent } = useParentQuery(user)
+const { data: currentChildrens } = useChildrenQuery(user)
+const { mutate: mutateParent, isPending: isPendingParent } = useParentMutation(user)
+const { mutate: mutateChildrens, isPending: isPendingChildrens } = useAddChildrenMutation(user)
+
+const isPending = computed(() => isPendingParent.value || isPendingChildrens.value)
+
+const defaultParent = computed(() => ({
+  name: currentParent.value?.name ?? '',
+  language: currentParent.value?.language ?? 'fr',
+}))
+
+const defaultChildrens = computed(() => currentChildrens.value ?? [])
+
+const schema = z.object({
+  parent: parentUpdateSchema.required(),
+  childrens: z.array(childrensInsertSchema).default([]),
+})
+
+type FormSchema = z.infer<typeof schema>
+
+const { values, handleSubmit } = useForm<FormSchema>({
+  validationSchema: toTypedSchema(schema),
+  initialValues: {
+    parent: {
+      name: defaultParent.value.name,
+      language: defaultParent.value.language,
+    },
+    childrens: defaultChildrens.value,
+  },
+})
+const { fields: childrens, remove, push } = useFieldArray<ChildrenInsert>('childrens')
+const { value: parent } = useField<ParentUpdate>('parent')
 
 const addChild = () => {
-  childrens.value.push({ name: '', avatar_color: 'red', points: 0, level: 1, user_id: userProfile.id })
+  if (!currentParent.value) return
+  push({ name: '', avatar_color: 'red', points: 0, level: 1, user_id: currentParent.value.id })
 }
 
 const removeChild = (index: number) => {
-  childrens.value.splice(index, 1)
+  remove(index)
 }
 
-const submit = async () => {
-  try {
-    // Mise à jour du profil utilisateur
-    await updateUserProfile({ name: lastName.value })
-    // Send only not empty children
-    const validChildrens = childrens.value.filter(child => child.name.trim() !== '')
-    // Ajout des enfants
-    await addChildrens(validChildrens)
-    navigateTo('/dashboard')
-  }
-  catch (err: unknown) {
-    console.error(err)
-    if (err instanceof Error) {
-      alert(err.message)
-    }
-    else {
-      alert('Une erreur inattendue est survenue')
-    }
-  }
-}
+const submit = handleSubmit(() => {
+  const validChildrens = values.childrens.filter(child => child.name.trim() !== '')
+  mutateChildrens(validChildrens)
+  mutateParent(values.parent)
+  navigateTo('/dashboard')
+})
 
 definePageMeta({
   middleware: 'auth',
