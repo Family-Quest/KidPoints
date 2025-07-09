@@ -107,7 +107,13 @@
     "delete": "Supprimer",
     "list": {
       "title": "Tâches",
-      "no_tasks_found": "Aucune tâche trouvée"
+      "no_tasks_found": "Aucune tâche trouvée",
+      "active": "A faire ou en cours",
+      "completed": "Completées",
+      "hide_completed": "Cacher les taches completées",
+      "show_completed": "Voir les taches completées",
+      "no_active_tasks_found": "Aucune tache en cours  ou à faire",
+      "no_completed_tasks_found": "Aucune tâche completée"
     },
     "unassigned": "Personne",
     "validate": "Valider",
