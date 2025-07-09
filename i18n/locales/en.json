@@ -1,0 +1,79 @@
+{
+  "signup": {
+    "title": "Créer un compte",
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "submit": "Créer mon compte",
+    "loading": "Création en cours...",
+    "emailSent": "Un email de confirmation vous a été envoyé.",
+    "alreadyAccount": "Vous avez déjà un compte ?",
+    "loginLink": "Connectez-vous ici",
+    "errors": {
+      "email": "Adresse email invalide",
+      "password": "Le mot de passe doit contenir au moins 8 caractères"
+    }
+  },
+  "onboarding": {
+    "title": "Bienvenue !",
+    "lastName": "Votre nom de famille",
+    "childrenTitle": "Ajoutez vos enfants",
+    "childName": "Prénom de l'enfant",
+    "addChild": "Ajouter un enfant",
+    "removeChild": "Supprimer",
+    "save": "Continuer"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "parentInfo": "Informations du parent",
+    "name": "Nom",
+    "email": "Email",
+    "language": "Langue",
+    "unknown": "Inconnue",
+    "childrenTitle": "Mes enfants",
+    "noChildren": "Aucun enfant n'a encore été ajouté.",
+    "level": "Niveau",
+    "points": "Points",
+    "loading": "Chargement..."
+  },
+  "about": {
+    "title": "À propos de KidPoints",
+    "description": "KidPoints est une application conçue pour aider les familles à organiser les tâches quotidiennes des enfants de manière ludique et motivante.",
+    "missionTitle": "Notre mission",
+    "missionContent": "Encourager l'autonomie, la responsabilisation et le travail d'équipe en famille grâce à un système de points et de récompenses.",
+    "featuresTitle": "Fonctionnalités",
+    "features": {
+      "chores": "Gestion des tâches personnalisées",
+      "rewards": "Système de récompenses",
+      "levels": "Niveaux et progression",
+      "family": "Multi-enfants et multi-profils"
+    }
+  },
+  "parent": {
+    "profile": "Profil",
+    "children": "Enfants",
+    "tasks": "Tâches"
+  },
+  "form": {
+    "name": "Name",
+    "language": "Language",
+    "save": "Save",
+    "childName": "Child name",
+    "add": "Add",
+    "delete": "Delete"
+  },
+  "colors": {
+    "red": "Rouge 🔴",
+    "blue": "Bleu 🔵",
+    "green": "Vert 🟢",
+    "yellow": "Jaune 🟡",
+    "purple": "Violet 🟣",
+    "pink": "Rose 🌸",
+    "orange": "Orange 🟠",
+    "brown": "Marron 🟤",
+    "gray": "Gris ⚪"
+  },
+  "language": {
+    "fr": "Français",
+    "en": "Anglais"
+  }
+}
