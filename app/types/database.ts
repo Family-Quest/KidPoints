@@ -186,6 +186,7 @@ export type Database = {
           description: string
           id: string
           is_active: boolean
+          order: number | null
           points: number
           status: Database["public"]["Enums"]["task_status"]
           title: string
@@ -195,6 +196,7 @@ export type Database = {
           description?: string
           id?: string
           is_active?: boolean
+          order?: number | null
           points?: number
           status?: Database["public"]["Enums"]["task_status"]
           title?: string
@@ -204,6 +206,7 @@ export type Database = {
           description?: string
           id?: string
           is_active?: boolean
+          order?: number | null
           points?: number
           status?: Database["public"]["Enums"]["task_status"]
           title?: string

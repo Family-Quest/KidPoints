@@ -20,6 +20,7 @@ export const useTask = () => {
           .from('tasks')
           .select('*')
           .eq('created_by', userRef.value.id)
+          .order('order', { ascending: true })
         return req.data as Task[]
       },
     })

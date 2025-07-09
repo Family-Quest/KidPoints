@@ -1,4 +1,18 @@
 {
+  "home": {
+    "title": "Bienvenue sur KidPoints !",
+    "subtitle": "Une façon ludique d'impliquer vos enfants dans leurs tâches quotidiennes.",
+    "cta_register": "Créer un compte",
+    "cta_login": "Se connecter",
+    "features": {
+      "rewards": "Des récompenses motivantes",
+      "rewards_desc": "Les enfants gagnent des points qu'ils peuvent échanger contre des surprises.",
+      "tasks": "Des missions amusantes",
+      "tasks_desc": "Attribuez des tâches sous forme de quêtes simples et engageantes.",
+      "parents": "Un espace parent clair",
+      "parents_desc": "Gérez les enfants, les tâches et les récompenses facilement."
+    }
+  },
   "signup": {
     "title": "Créer un compte",
     "email": "Adresse email",
