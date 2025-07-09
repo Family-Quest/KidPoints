@@ -37,37 +37,30 @@ export const useTask = () => {
         const req = await supabase
           .from('tasks')
           .select(`
-            *,
-            task_assignments:task_assignments (
+          *,
+          assignment:task_assignments (
+            child_id,
+            task_id,
+            child:children (
               id,
-              child_id,
-              task_id,
-              status,
-              date,
-              validated_at,
-              child:children (
-                id,
-                name,
-                avatar_color,
-                level,
-                points,
-                user_id
-              )
+              name,
+              avatar_color,
+              level,
+              points,
+              user_id
             )
-          `)
+          )
+        `)
           .eq('created_by', userRef.value.id)
           .eq('is_active', true)
           .order('order', { ascending: true })
 
-        // Si tu veux transformer le résultat pour récupérer par tâche un enfant (ex: le premier) :
-        const tasksWithSingleChild = (req.data ?? []).map(task => ({
+        const tasksWithChild = (req.data ?? []).map(task => ({
           ...task,
-          child: Array.isArray(task.task_assignments) && task.task_assignments.length > 0
-            ? task.task_assignments[0]?.child
-            : null,
+          child: task.assignment?.child ?? null,
         }))
 
-        return tasksWithSingleChild
+        return tasksWithChild
       },
     })
   }
@@ -77,12 +70,9 @@ export const useTask = () => {
     return useMutation({
       mutationFn: async (task: TaskInsert) => {
         if (!userRef.value?.id) throw new Error('User ID is required for creating tasks')
-        const req = await supabase
+        return await supabase
           .from('tasks')
           .insert(task)
-          .select()
-          .single()
-        return req
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
@@ -96,11 +86,10 @@ export const useTask = () => {
       mutationFn: async (task: TaskUpdate) => {
         if (!userRef.value?.id) throw new Error('User ID is required for updating tasks')
         if (!task.id) throw new Error('Task ID is required for updating tasks')
-        const req = await supabase
+        await supabase
           .from('tasks')
           .update(task)
           .eq('id', task.id)
-        return req
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
@@ -124,11 +113,72 @@ export const useTask = () => {
     })
   }
 
+  function useDeleteAssignationMutation(user: MaybeRef<User | null>) {
+    const userRef = toRef(user)
+    return useMutation({
+      mutationFn: async (taskId: string) => {
+        if (!userRef.value?.id) throw new Error('User ID is required for deleting task assignments')
+        await supabase
+          .from('task_assignments')
+          .delete()
+          .eq('task_id', taskId)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['get-active-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+      },
+    })
+  }
+
+  function useUpsertTaskAssignmentMutation(user: MaybeRef<User | null>) {
+    const userRef = toRef(user)
+    return useMutation({
+      mutationFn: async (payload: {
+        task_id: string
+        child_id: string
+      }) => {
+        if (!userRef.value?.id) throw new Error('User ID is required for task assignment')
+        const { task_id, child_id } = payload
+        if (!task_id) throw new Error('Task ID is required')
+        await supabase
+          .from('task_assignments')
+          .upsert(
+            { task_id, child_id },
+            { onConflict: 'task_id' },
+          )
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['get-active-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+      },
+    })
+  }
+
+  function useValidateTaskMutation(user: MaybeRef<User | null>) {
+    const userRef = toRef(user)
+
+    return useMutation({
+      mutationFn: async (taskId: string) => {
+        if (!userRef.value?.id) throw new Error('Not logged in')
+        const { error } = await supabase.rpc('validate_task', { p_task_id: taskId })
+        if (error) throw error
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['get-active-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
+      },
+    })
+  }
+
   return {
     useTasksQuery,
     useActiveTasksQuery,
     useCreateTaskMutation,
     useUpdateTaskMutation,
     useDeleteTaskMutation,
+    useValidateTaskMutation,
+    useUpsertTaskAssignmentMutation,
+    useDeleteAssignationMutation,
   }
 }

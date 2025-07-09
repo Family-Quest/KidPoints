@@ -25,7 +25,7 @@
 
     <div
       v-else
-      class="flex flex-col gap-4"
+      class="grid grid-cols-1 md:grid-cols-2 gap-4"
     >
       <TaskCard
         v-for="task in tasks"

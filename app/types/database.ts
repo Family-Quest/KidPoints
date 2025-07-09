@@ -141,27 +141,15 @@ export type Database = {
       task_assignments: {
         Row: {
           child_id: string
-          date: string
-          id: string
-          status: string | null
           task_id: string
-          validated_at: string | null
         }
         Insert: {
           child_id: string
-          date: string
-          id?: string
-          status?: string | null
           task_id: string
-          validated_at?: string | null
         }
         Update: {
           child_id?: string
-          date?: string
-          id?: string
-          status?: string | null
           task_id?: string
-          validated_at?: string | null
         }
         Relationships: [
           {
@@ -174,7 +162,7 @@ export type Database = {
           {
             foreignKeyName: "task_assignments_task_id_fkey"
             columns: ["task_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "tasks"
             referencedColumns: ["id"]
           },
@@ -190,6 +178,7 @@ export type Database = {
           points: number
           status: Database["public"]["Enums"]["task_status"]
           title: string
+          validated_at: string | null
         }
         Insert: {
           created_by: string
@@ -200,6 +189,7 @@ export type Database = {
           points?: number
           status?: Database["public"]["Enums"]["task_status"]
           title?: string
+          validated_at?: string | null
         }
         Update: {
           created_by?: string
@@ -210,6 +200,7 @@ export type Database = {
           points?: number
           status?: Database["public"]["Enums"]["task_status"]
           title?: string
+          validated_at?: string | null
         }
         Relationships: [
           {
@@ -226,7 +217,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      validate_task: {
+        Args: { p_task_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       languages: "fr" | "en"

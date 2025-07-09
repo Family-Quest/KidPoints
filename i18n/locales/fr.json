@@ -109,7 +109,10 @@
       "title": "Tâches",
       "no_tasks_found": "Aucune tâche trouvée"
     },
-    "unassigned": "non assignée"
+    "unassigned": "Personne",
+    "validate": "Valider",
+    "validate_confirm_title": "Confirmer la validation",
+    "validate_confirm_message": "Es-tu sûr de vouloir valider cette tâche ?"
   },
   "child": {
     "list": {
@@ -131,5 +134,8 @@
     "logout": "Déconnexion",
     "login": "Connexion",
     "signup": "Créer un compte"
-  }
+  },
+  "cancel": "Annuler",
+  "validating": "Validation...",
+  "confirm": "Confirmer"
 }

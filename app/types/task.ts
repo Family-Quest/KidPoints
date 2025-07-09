@@ -4,8 +4,17 @@ import { z } from 'zod'
 import type { Child } from './child'
 
 export type TaskStatus = Enums<'task_status'>
+export const TaskStatusEnum = {
+  TODO: 'todo',
+  IN_PROGRESS: 'in_progress',
+  DONE: 'done',
+} as const
 
-export const taskStatusValues = ['todo', 'in_progress', 'done'] as const satisfies readonly TaskStatus[]
+export const taskStatusValues = [
+  TaskStatusEnum.TODO,
+  TaskStatusEnum.IN_PROGRESS,
+  TaskStatusEnum.DONE,
+] as const
 
 export type Task = Tables<'tasks'>
 export type TaskInsert = TablesInsert<'tasks'>
@@ -16,14 +25,14 @@ export type TaskAssignment = Tables<'task_assignments'> & {
 }
 
 export type ActiveTask = Task & {
-  task_assignments?: TaskAssignment[]
+  assignment: TaskAssignment | null
 }
 
 export const taskInsertSchema = z.object({
   title: z.string().min(2).max(100),
   description: z.string().max(500).optional(),
   points: z.number().min(0).optional(),
-  status: z.enum(taskStatusValues).default('todo'),
+  status: z.enum(taskStatusValues).default(TaskStatusEnum.TODO),
 })
 
 export const taskUpdateSchema = z.object({
