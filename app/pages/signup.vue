@@ -29,7 +29,7 @@
 
       <!-- Password -->
       <div>
-        <PasswordInput
+        <InputPassword
           v-model="password"
           :placeholder="$t('signup.password')"
           :class="{ 'ring-red-300': errors.password }"

@@ -4,10 +4,10 @@
     <ParentProfileUpdate />
 
     <!-- Enfants -->
-    <ChildrensUpdate />
+    <ChildrenUpdateList />
 
     <!-- Tâches -->
-    <TasksUpdate />
+    <TaskUpdateList />
   </div>
 </template>
 
