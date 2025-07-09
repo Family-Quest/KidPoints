@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-purple-50 to-yellow-50 px-6 py-12">
+  <div class="min-h-screen bg-gradient-to-br from-purple-50 to-yellow-50 px-6 py-12 rounded">
     <div class="max-w-5xl mx-auto text-center space-y-10">
       <!-- Logo / Titre -->
       <h1 class="text-5xl font-bold text-purple-700 font-title">
@@ -25,13 +25,13 @@
       >
         <NuxtLink
           to="/signup"
-          class="btn-primary"
+          class="bg-purple-600 text-white px-6 py-3 rounded-xl shadow hover:bg-purple-700 transition"
         >
           {{ $t('home.cta_register') }}
         </NuxtLink>
         <NuxtLink
           to="/login"
-          class="btn-secondary"
+          class="border border-purple-600 text-purple-700 px-6 py-3 rounded-xl hover:bg-purple-100 transition"
         >
           {{ $t('home.cta_login') }}
         </NuxtLink>
@@ -92,11 +92,5 @@ definePageMeta({
 
 .font-title {
   font-family: 'Baloo 2', cursive;
-}
-.btn-primary {
-  @apply bg-purple-600 text-white px-6 py-3 rounded-xl shadow hover:bg-purple-700 transition;
-}
-.btn-secondary {
-  @apply border border-purple-600 text-purple-700 px-6 py-3 rounded-xl hover:bg-purple-100 transition;
 }
 </style>

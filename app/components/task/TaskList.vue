@@ -84,20 +84,15 @@
       <transition name="fade-slide">
         <div
           v-if="showCompleted && completedTasks?.length"
-          class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 opacity-90"
+          class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-4 opacity-90"
         >
           <TaskCard
             v-for="task in completedTasks"
             :key="task.id"
             :task="task"
             compact
+            class="opacity-70 grayscale transition hover:grayscale-0"
           />
-        </div>
-        <div
-          v-else-if="completedTasks?.length === 0"
-          class="text-gray-400 italic text-center py-8"
-        >
-          {{ $t('task.list.no_completed_tasks_found') }}
         </div>
       </transition>
     </div>

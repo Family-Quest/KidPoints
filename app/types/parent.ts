@@ -10,6 +10,6 @@ export type ParentLanguages = Enums<'languages'>
 export const parentLanguagesValues = ['fr', 'en'] as const satisfies readonly ParentLanguages[]
 
 export const parentUpdateSchema = z.object({
-  name: z.string().min(2, 'Parent name is required').max(100, 'Parent name must be less than 100 characters'),
+  name: z.string().min(2, 'validation.parent_name_required').max(100, 'validation.parent_name_max_length'),
   language: z.enum(parentLanguagesValues).default('fr'),
 })

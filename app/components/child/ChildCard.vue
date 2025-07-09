@@ -19,7 +19,6 @@
       {{ $t('child.level') }} {{ child.level }}
     </p>
     <PointProgressBar
-      class="mt-3 w-full"
       :points="child.points"
       :level="child.level"
     />

@@ -1,7 +1,7 @@
 <!-- components/tasks/TaskCard.vue -->
 <template>
   <div
-    class="bg-white rounded-xl shadow-md p-4 flex cursor-pointer hover:shadow-xl transition-shadow gap-4 items-center"
+    class="rounded-xl shadow-md p-4 flex cursor-pointer hover:shadow-xl transition-shadow gap-4 items-center"
     :class="statusBgClass"
   >
     <!-- Bouton validation à gauche -->
@@ -41,7 +41,7 @@
           :task-assignment="task.assignment"
         />
         <div
-          class="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold select-none bg-purple-200 text-purple-700"
+          class="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold select-none bg-purple-200 text-purple-700 border border-purple-300"
         >
           {{ task.points }}
         </div>
@@ -59,17 +59,17 @@ const props = defineProps<{
 }>()
 
 const statusBgMap: Record<string, string> = {
-  todo: 'bg-yellow-50',
-  doing: 'bg-blue-50',
-  done: 'bg-green-50',
+  todo: 'bg-red-100',
+  in_progress: 'bg-blue-100',
+  done: 'bg-green-100',
 }
 
 const statusTextMap: Record<string, string> = {
-  todo: 'text-yellow-700',
-  doing: 'text-blue-700',
+  todo: 'text-red-700',
+  in_progress: 'text-blue-700',
   done: 'text-green-700',
 }
 
-const statusBgClass = statusBgMap[props.task.status] || 'bg-gray-100'
-const statusTextClass = statusTextMap[props.task.status] || 'text-gray-700'
+const statusBgClass = computed(() => statusBgMap[props.task.status] || 'bg-gray-100')
+const statusTextClass = computed(() => statusTextMap[props.task.status] || 'text-gray-700')
 </script>

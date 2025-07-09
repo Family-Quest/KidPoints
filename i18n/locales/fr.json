@@ -143,5 +143,15 @@
   },
   "cancel": "Annuler",
   "validating": "Validation...",
-  "confirm": "Confirmer"
+  "confirm": "Confirmer",
+  "validation": {
+    "parent_name_required": "Le nom est obligatoire",
+    "parent_name_max_length": "Le nom doit faire 100 caractères maximum",
+    "child_name_required": "Le nom est obligatoire",
+    "child_name_max_length": "Le nom doit faire 100 caractères maximum",
+    "task_title_required": "Le titre est obligatoire\t",
+    "task_title_max_length": "Le titre doit faire 100 caractères maximum",
+    "task_description_max_length": "La description doit faire 500 caractères maximum",
+    "task_points_min": "Au moins 1 point"
+  }
 }

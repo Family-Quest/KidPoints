@@ -3,19 +3,36 @@
     class="p-5 rounded-2xl shadow-md relative transition-all duration-300 border border-gray-100 bg-gradient-to-br from-purple-50 to-white hover:shadow-xl space-y-4"
   >
     <!-- Titre -->
-    <input
-      v-model="title"
-      :placeholder="$t('task.title')"
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 font-semibold text-gray-700 shadow-inner"
-    >
+    <div>
+      <input
+        v-model="title"
+        :placeholder="$t('task.title')"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 font-semibold text-gray-700 shadow-inner"
+      >
+
+      <p
+        v-if="titleErrorMessage"
+        class="mt-1 text-xs text-red-600 font-medium"
+      >
+        {{ $t(titleErrorMessage) }}
+      </p>
+    </div>
 
     <!-- Description -->
-    <textarea
-      v-model="description"
-      :placeholder="$t('task.description')"
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none text-sm text-gray-600 shadow-inner"
-      rows="3"
-    />
+    <div>
+      <textarea
+        v-model="description"
+        :placeholder="$t('task.description')"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none text-sm text-gray-600 shadow-inner"
+        rows="3"
+      />
+      <p
+        v-if="descriptionErrorMessage"
+        class="mt-1 text-xs text-red-600 font-medium"
+      >
+        {{ $t(descriptionErrorMessage) }}
+      </p>
+    </div>
 
     <!-- Statut -->
     <label class="flex items-center gap-2">
@@ -31,16 +48,24 @@
     </label>
 
     <!-- Points -->
-    <label class="flex items-center gap-2">
-      <input
-        v-model.number="points"
-        type="number"
-        min="0"
-        class="w-16 px-2 py-1 border border-gray-300 rounded text-center"
+    <div>
+      <label class="flex items-center gap-2">
+        <input
+          v-model.number="points"
+          type="number"
+          min="0"
+          class="w-16 px-2 py-1 border border-gray-300 rounded text-center"
+        >
+        <span>{{ $t('task.points') }}</span>
+        <span class="text-purple-500 font-semibold">⭐</span>
+      </label>
+      <p
+        v-if="pointsErrorMessage"
+        class="mt-1 text-xs text-red-600 font-medium"
       >
-      <span>{{ $t('task.points') }}</span>
-      <span class="text-purple-500 font-semibold">⭐</span>
-    </label>
+        {{ $t(pointsErrorMessage) }}
+      </p>
+    </div>
 
     <!-- Boutons -->
     <div class="flex justify-between items-center pt-4 border-t border-gray-200">
@@ -88,9 +113,9 @@ const { values, handleSubmit } = useForm<TaskUpdate>({
   initialValues: { ...task.value },
 })
 
-const { value: title } = useField<string>('title')
-const { value: description } = useField<string>('description')
-const { value: points } = useField<number>('points')
+const { value: title, errorMessage: titleErrorMessage } = useField<string>('title')
+const { value: description, errorMessage: descriptionErrorMessage } = useField<string>('description')
+const { value: points, errorMessage: pointsErrorMessage } = useField<number>('points')
 const { value: status } = useField<'todo' | 'in_progress' | 'done'>('status')
 
 const onSubmit = handleSubmit(() => {

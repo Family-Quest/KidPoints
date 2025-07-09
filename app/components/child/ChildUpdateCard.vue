@@ -4,11 +4,19 @@
     :style="fadeBackgroundStyle"
   >
     <!-- Nom de l’enfant -->
-    <input
-      v-model="name"
-      :placeholder="$t('onboarding.childName')"
-      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
-    >
+    <div>
+      <input
+        v-model="name"
+        :placeholder="$t('onboarding.childName')"
+        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+      >
+      <p
+        v-if="nameErrorMessage"
+        class="mt-1 text-xs text-red-600 font-medium"
+      >
+        {{ $t(nameErrorMessage) }}
+      </p>
+    </div>
 
     <!-- Sélecteur de couleur avatar -->
     <select
@@ -62,7 +70,7 @@ import { useField, useForm } from 'vee-validate'
 import { TrashIcon } from '@heroicons/vue/24/solid'
 import { toTypedSchema } from '@vee-validate/zod'
 
-import { childInsertSchema } from '~/types/child'
+import { childUpdateSchema } from '~/types/child'
 import type { Child, ChildUpdate } from '~/types/child'
 
 const { avatarColors, useDeleteChildMutation, useUpdateChildMutation } = useChild()
@@ -77,16 +85,14 @@ const props = defineProps<{
 
 const child = toRef(props, 'child')
 
-const schema = childInsertSchema
-
 const { values, handleSubmit } = useForm<ChildUpdate>({
-  validationSchema: toTypedSchema(schema),
+  validationSchema: toTypedSchema(childUpdateSchema),
   initialValues: {
     ...child.value,
   },
 })
 
-const { value: name } = useField<string>('name')
+const { value: name, errorMessage: nameErrorMessage } = useField<string>('name')
 const { value: avatarColor } = useField<string>('avatar_color')
 
 const fadeBackgroundStyle = computed(() => {

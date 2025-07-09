@@ -1,30 +1,11 @@
 import type { User } from '@supabase/supabase-js'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { Database } from '~/types/database'
-import type { ActiveTask, Task, TaskInsert, TaskUpdate } from '~/types/task'
+import type { ActiveTask, TaskInsert, TaskUpdate } from '~/types/task'
 
 export const useTask = () => {
   const supabase = useSupabaseClient<Database>()
   const queryClient = useQueryClient()
-
-  function useTasksQuery(user: MaybeRef<User | null>) {
-    const userRef = toRef(user)
-    const enabled = computed(() => !!userRef.value?.id)
-    return useQuery({
-      queryKey: ['get-tasks', userRef],
-      enabled,
-      queryFn: async () => {
-        if (!userRef.value?.id) throw new Error('User ID is required for fetching tasks')
-        // Fetch tasks for the user
-        const req = await supabase
-          .from('tasks')
-          .select('*')
-          .eq('created_by', userRef.value.id)
-          .order('order', { ascending: true })
-        return req.data as Task[]
-      },
-    })
-  }
 
   function useActiveTasksQuery(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
@@ -76,6 +57,7 @@ export const useTask = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-active-tasks', userRef] })
       },
     })
   }
@@ -93,6 +75,7 @@ export const useTask = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-active-tasks', userRef] })
       },
     })
   }
@@ -109,6 +92,7 @@ export const useTask = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-active-tasks', userRef] })
       },
     })
   }
@@ -172,7 +156,6 @@ export const useTask = () => {
   }
 
   return {
-    useTasksQuery,
     useActiveTasksQuery,
     useCreateTaskMutation,
     useUpdateTaskMutation,

@@ -58,7 +58,7 @@ const user = useSupabaseUser()
 const { data: parent } = useParentQuery(user)
 
 function redirect() {
-  if (!parent.value?.name) navigateTo('/onboarding')
+  if (!parent.value?.name) navigateTo('/family')
   navigateTo('/dashboard')
 }
 

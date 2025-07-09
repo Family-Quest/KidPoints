@@ -35,9 +35,9 @@
         >
         <p
           v-if="nameErrorMessage"
-          class="mt-1 text-sm text-red-600 font-medium"
+          class="mt-1 text-xs text-red-600 font-medium"
         >
-          {{ nameErrorMessage }}
+          {{ $t(nameErrorMessage) }}
         </p>
       </div>
 
@@ -66,7 +66,7 @@
           v-if="languageErrorMessage"
           class="mt-1 text-sm text-red-600 font-medium"
         >
-          {{ languageErrorMessage }}
+          {{ $t(languageErrorMessage) }}
         </p>
       </div>
 
