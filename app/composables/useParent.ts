@@ -16,7 +16,7 @@ export const useParent = () => {
       queryFn: async () => {
         if (!userRef.value?.id) throw new Error('User ID is required for fetching profile')
         const req = await supabase
-          .from('parent')
+          .from('parents')
           .select('*')
           .eq('id', userRef.value.id)
           .single()
@@ -30,7 +30,7 @@ export const useParent = () => {
     return useMutation({
       mutationFn: async (parent: ParentUpdate) => {
         if (!userRef.value?.id) throw new Error('User ID is required for updating profile')
-        await supabase.from('parent').update(parent).eq('id', userRef.value.id)
+        await supabase.from('parents').update(parent).eq('id', userRef.value.id)
       },
       onSuccess: () => {
         queryClient.invalidateQueries({

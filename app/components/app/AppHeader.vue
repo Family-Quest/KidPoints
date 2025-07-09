@@ -9,25 +9,20 @@
       </NuxtLink>
 
       <nav class="flex items-center gap-4 text-sm">
-        <NuxtLink
-          to="/"
-          class="hover:underline"
-        >Accueil</NuxtLink>
-
         <template v-if="user">
           <NuxtLink
             to="/dashboard"
             class="hover:underline"
-          >Dashboard</NuxtLink>
+          >{{ $t('header.dashboard') }}</NuxtLink>
           <NuxtLink
-            to="/parent"
+            to="/family"
             class="hover:underline"
-          >Mon Profil</NuxtLink>
+          >{{ $t('header.family_management') }}</NuxtLink>
           <button
             class="bg-white text-purple-600 px-3 py-1 rounded hover:bg-purple-100"
             @click="onLogout"
           >
-            Déconnexion
+            {{ $t('header.logout') }}
           </button>
         </template>
 
@@ -35,11 +30,11 @@
           <NuxtLink
             to="/login"
             class="hover:underline"
-          >Connexion</NuxtLink>
+          >{{ $t('header.login') }}</NuxtLink>
           <NuxtLink
             to="/signup"
             class="hover:underline"
-          >Créer un compte</NuxtLink>
+          >{{ $t('header.signup') }}</NuxtLink>
         </template>
       </nav>
     </div>

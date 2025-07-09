@@ -107,7 +107,10 @@ const fadeBackgroundStyle = computed(() => {
 })
 
 const onSubmit = handleSubmit(() => {
-  updateChild(values)
+  updateChild({
+    ...child.value,
+    ...values,
+  })
 })
 
 const onRemove = () => {

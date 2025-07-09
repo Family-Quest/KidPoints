@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-md mx-auto mt-16 p-6 bg-white rounded-xl shadow space-y-6">
     <h1 class="text-2xl font-bold text-center text-purple-600">
-      Connexion parent
+      {{ $t('auth.login_title') }}
     </h1>
 
     <form
@@ -32,12 +32,12 @@
     </form>
 
     <p class="text-sm text-center">
-      Pas encore de compte ?
+      {{ $t('auth.no_account') }}
       <NuxtLink
         to="/signup"
         class="text-purple-600 underline hover:opacity-80"
       >
-        Créez un compte ici
+        {{ $t('auth.signup') }}
       </NuxtLink>
     </p>
 

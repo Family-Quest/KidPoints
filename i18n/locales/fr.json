@@ -104,6 +104,32 @@
     "status_done": "Terminée",
     "add": "Ajouter une tâche",
     "save": "Enregistrer",
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "list": {
+      "title": "Tâches",
+      "no_tasks_found": "Aucune tâche trouvée"
+    },
+    "unassigned": "non assignée"
+  },
+  "child": {
+    "list": {
+      "no_children_found": "Aucun enfant trouvé",
+      "title": "Enfants"
+    },
+    "points": "Points :",
+    "level": "Niveau :"
+  },
+  "auth": {
+    "signup": "Créez un compte ici",
+    "no_account": "Pas encore de compte ?",
+    "login_title": "Connexion parent",
+    "password_strength": "Force du mot de passe :"
+  },
+  "header": {
+    "dashboard": "Dashboard",
+    "family_management": "Gestion Famille",
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "signup": "Créer un compte"
   }
 }

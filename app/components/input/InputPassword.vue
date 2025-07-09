@@ -27,7 +27,7 @@
         />
       </div>
       <p class="text-xs text-gray-600 mt-1">
-        Force du mot de passe : <strong>{{ strengthLabel }}</strong>
+        {{ $t('auth.password_strength') }} <strong>{{ strengthLabel }}</strong>
       </p>
     </div>
   </div>

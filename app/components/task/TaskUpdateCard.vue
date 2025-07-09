@@ -94,7 +94,10 @@ const { value: points } = useField<number>('points')
 const { value: status } = useField<'todo' | 'in_progress' | 'done'>('status')
 
 const onSubmit = handleSubmit(() => {
-  updateTask(values)
+  updateTask({
+    ...task.value,
+    ...values,
+  })
 })
 
 const onRemove = () => {

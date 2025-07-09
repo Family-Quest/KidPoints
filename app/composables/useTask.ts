@@ -1,7 +1,7 @@
 import type { User } from '@supabase/supabase-js'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { Database } from '~/types/database'
-import type { Task, TaskInsert, TaskUpdate } from '~/types/task'
+import type { ActiveTask, Task, TaskInsert, TaskUpdate } from '~/types/task'
 
 export const useTask = () => {
   const supabase = useSupabaseClient<Database>()
@@ -22,6 +22,52 @@ export const useTask = () => {
           .eq('created_by', userRef.value.id)
           .order('order', { ascending: true })
         return req.data as Task[]
+      },
+    })
+  }
+
+  function useActiveTasksQuery(user: MaybeRef<User | null>) {
+    const userRef = toRef(user)
+    const enabled = computed(() => !!userRef.value?.id)
+    return useQuery<ActiveTask[]>({
+      queryKey: ['get-active-tasks', userRef],
+      enabled,
+      queryFn: async () => {
+        if (!userRef.value?.id) throw new Error('User ID is required for fetching tasks')
+        const req = await supabase
+          .from('tasks')
+          .select(`
+            *,
+            task_assignments:task_assignments (
+              id,
+              child_id,
+              task_id,
+              status,
+              date,
+              validated_at,
+              child:children (
+                id,
+                name,
+                avatar_color,
+                level,
+                points,
+                user_id
+              )
+            )
+          `)
+          .eq('created_by', userRef.value.id)
+          .eq('is_active', true)
+          .order('order', { ascending: true })
+
+        // Si tu veux transformer le résultat pour récupérer par tâche un enfant (ex: le premier) :
+        const tasksWithSingleChild = (req.data ?? []).map(task => ({
+          ...task,
+          child: Array.isArray(task.task_assignments) && task.task_assignments.length > 0
+            ? task.task_assignments[0]?.child
+            : null,
+        }))
+
+        return tasksWithSingleChild
       },
     })
   }
@@ -80,6 +126,7 @@ export const useTask = () => {
 
   return {
     useTasksQuery,
+    useActiveTasksQuery,
     useCreateTaskMutation,
     useUpdateTaskMutation,
     useDeleteTaskMutation,

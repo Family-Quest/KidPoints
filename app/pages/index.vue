@@ -19,7 +19,10 @@
       >
 
       <!-- Appels à l'action -->
-      <div class="flex justify-center gap-4 flex-wrap">
+      <div
+        v-if="!user"
+        class="flex justify-center gap-4 flex-wrap"
+      >
         <NuxtLink
           to="/signup"
           class="btn-primary"
@@ -78,6 +81,7 @@
 </template>
 
 <script setup lang="ts">
+const user = useSupabaseUser()
 definePageMeta({
   layout: 'parent',
 })

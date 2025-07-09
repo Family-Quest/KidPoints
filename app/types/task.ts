@@ -1,6 +1,7 @@
 // types/user.ts
 import type { Enums, Tables, TablesInsert, TablesUpdate } from '~/types/database'
 import { z } from 'zod'
+import type { Child } from './child'
 
 export type TaskStatus = Enums<'task_status'>
 
@@ -9,6 +10,14 @@ export const taskStatusValues = ['todo', 'in_progress', 'done'] as const satisfi
 export type Task = Tables<'tasks'>
 export type TaskInsert = TablesInsert<'tasks'>
 export type TaskUpdate = TablesUpdate<'tasks'>
+
+export type TaskAssignment = Tables<'task_assignments'> & {
+  child?: Child | null
+}
+
+export type ActiveTask = Task & {
+  task_assignments?: TaskAssignment[]
+}
 
 export const taskInsertSchema = z.object({
   title: z.string().min(2).max(100),
