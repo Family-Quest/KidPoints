@@ -2,8 +2,8 @@
 import type { Tables, TablesUpdate, Enums } from '~/types/database'
 import { z } from 'zod'
 
-export type Parent = Tables<'parent'>
-export type ParentUpdate = TablesUpdate<'parent'>
+export type Parent = Tables<'parents'>
+export type ParentUpdate = TablesUpdate<'parents'>
 
 export type ParentLanguages = Enums<'languages'>
 

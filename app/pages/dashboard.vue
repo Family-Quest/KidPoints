@@ -33,13 +33,13 @@
         {{ $t('dashboard.childrenTitle') }}
       </h2>
       <div
-        v-if="isLoadingChildrens"
+        v-if="isLoadingChildren"
         class="text-gray-500"
       >
         {{ $t('dashboard.loading') }}
       </div>
       <div
-        v-else-if="childrens?.length === 0"
+        v-else-if="children?.length === 0"
         class="text-gray-500 italic"
       >
         {{ $t('dashboard.noChildren') }}
@@ -47,7 +47,7 @@
 
       <div class="grid gap-4">
         <div
-          v-for="child in childrens"
+          v-for="child in children"
           :key="child.id"
           class="border rounded-lg p-4 shadow hover:shadow-md transition"
         >
@@ -75,14 +75,14 @@
 
 <script setup lang="ts">
 const { useParentQuery } = useParent()
-const { useChildrenQuery } = useChildren()
+const { useChildrenQuery } = useChild()
 
 const user = useSupabaseUser()
 
 const { data: parent, isLoading: isLoadingParent, error: errorParent } = useParentQuery(user)
-const { data: childrens, isLoading: isLoadingChildrens, error: errorChildrens } = useChildrenQuery(user)
+const { data: children, isLoading: isLoadingChildren, error: errorChildren } = useChildrenQuery(user)
 
-const error = computed(() => errorParent.value?.message || errorChildrens.value?.message || null)
+const error = computed(() => errorParent.value?.message || errorChildren.value?.message || null)
 
 const getColorFromName = (color: string | null) => {
   const map: Record<string, string> = {

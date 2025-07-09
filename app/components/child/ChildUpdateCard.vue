@@ -27,12 +27,12 @@
     <!-- Points et niveau -->
     <div class="flex justify-between text-sm text-gray-600 font-medium">
       <div>
-        <span class="text-purple-500 font-semibold">⭐ {{ children.points }}</span>
+        <span class="text-purple-500 font-semibold">⭐ {{ child.points }}</span>
         <span class="ml-1">{{ $t('parent.child.points') }}</span>
       </div>
       <div>
         <span class="">{{ $t('parent.child.level') }}</span>
-        <span class="text-green-500 font-semibold ml-1">{{ children.level }} ⬆️ </span>
+        <span class="text-green-500 font-semibold ml-1">{{ child.level }} ⬆️ </span>
       </div>
     </div>
 
@@ -62,27 +62,27 @@ import { useField, useForm } from 'vee-validate'
 import { TrashIcon } from '@heroicons/vue/24/solid'
 import { toTypedSchema } from '@vee-validate/zod'
 
-import { childrensInsertSchema } from '~/types/children'
-import type { Children, ChildrenUpdate } from '~/types/children'
+import { childInsertSchema } from '~/types/child'
+import type { Child, ChildUpdate } from '~/types/child'
 
-const { avatarColors, useDeleteChildrenMutation, useUpdateChildrenMutation } = useChildren()
+const { avatarColors, useDeleteChildMutation, useUpdateChildMutation } = useChild()
 const user = useSupabaseUser()
 
-const { mutate: deleteChildren } = useDeleteChildrenMutation(user)
-const { mutate: updateChildren, isPending } = useUpdateChildrenMutation(user)
+const { mutate: deleteChild } = useDeleteChildMutation(user)
+const { mutate: updateChild, isPending } = useUpdateChildMutation(user)
 
 const props = defineProps<{
-  children: Children
+  child: Child
 }>()
 
-const children = toRef(props, 'children')
+const child = toRef(props, 'child')
 
-const schema = childrensInsertSchema
+const schema = childInsertSchema
 
-const { values, handleSubmit } = useForm<ChildrenUpdate>({
+const { values, handleSubmit } = useForm<ChildUpdate>({
   validationSchema: toTypedSchema(schema),
   initialValues: {
-    ...children.value,
+    ...child.value,
   },
 })
 
@@ -107,11 +107,11 @@ const fadeBackgroundStyle = computed(() => {
 })
 
 const onSubmit = handleSubmit(() => {
-  updateChildren(values)
+  updateChild(values)
 })
 
 const onRemove = () => {
-  if (!children.value.id) return
-  deleteChildren(children.value.id)
+  if (!child.value.id) return
+  deleteChild(child.value.id)
 }
 </script>

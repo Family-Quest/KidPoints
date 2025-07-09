@@ -18,17 +18,17 @@
       v-else
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
     >
-      <ChildrenUpdateCard
+      <ChildUpdateCard
         v-for="child in childrens"
         :key="child.id"
-        :children="child"
+        :child="child"
       />
 
       <!-- Bouton d'ajout -->
       <button
         class="flex flex-col items-center justify-center h-40 border-2 border-dashed border-gray-300 hover:border-purple-500 rounded-xl transition-colors text-gray-500 hover:text-purple-600 text-sm font-medium focus:outline-none"
         :disabled="isPending"
-        @click="addChild"
+        @click="onAddChild"
       >
         <span class="text-3xl font-bold mb-1">+</span>
         <span>{{ $t('onboarding.addChild') }}</span>
@@ -38,15 +38,15 @@
 </template>
 
 <script setup lang="ts">
-const { useAddChildrenMutation, useChildrenQuery } = useChildren()
+const { useAddChildMutation, useChildrenQuery } = useChild()
 const user = useSupabaseUser()
 
 const { data: childrens, isLoading } = useChildrenQuery(user)
-const { mutate: addChildren, isPending } = useAddChildrenMutation(user)
+const { mutate: addChild, isPending } = useAddChildMutation(user)
 
-const addChild = () => {
+const onAddChild = () => {
   if (!user.value?.id) return
-  addChildren({
+  addChild({
     user_id: user.value.id,
   })
 }

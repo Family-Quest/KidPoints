@@ -44,12 +44,12 @@ export type Database = {
             foreignKeyName: "children_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "parent"
+            referencedRelation: "parents"
             referencedColumns: ["id"]
           },
         ]
       }
-      parent: {
+      parents: {
         Row: {
           created_at: string
           id: string
@@ -133,7 +133,7 @@ export type Database = {
             foreignKeyName: "rewards_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
-            referencedRelation: "parent"
+            referencedRelation: "parents"
             referencedColumns: ["id"]
           },
         ]
@@ -216,7 +216,7 @@ export type Database = {
             foreignKeyName: "tasks_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
-            referencedRelation: "parent"
+            referencedRelation: "parents"
             referencedColumns: ["id"]
           },
         ]

@@ -2,11 +2,11 @@
 import type { Tables, TablesInsert, TablesUpdate } from '~/types/database'
 import { z } from 'zod'
 
-export type Children = Tables<'children'>
-export type ChildrenInsert = TablesInsert<'children'>
-export type ChildrenUpdate = TablesUpdate<'children'>
+export type Child = Tables<'children'>
+export type ChildInsert = TablesInsert<'children'>
+export type ChildUpdate = TablesUpdate<'children'>
 
-export const childrensInsertSchema = z.object({
+export const childInsertSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   avatar_color: z.string(),
   points: z.number().default(0),
@@ -14,7 +14,7 @@ export const childrensInsertSchema = z.object({
   user_id: z.string().uuid(),
 })
 
-export const childrensUpdateSchema = z.object({
+export const childUpdateSchema = z.object({
   name: z.string().min(1, 'Name is required').optional(),
   avatar_color: z.string().optional(),
   points: z.number().optional(),

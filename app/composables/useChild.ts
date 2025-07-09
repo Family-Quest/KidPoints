@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
-import type { Children, ChildrenInsert, ChildrenUpdate } from '~/types/children'
+import type { Child, ChildInsert, ChildUpdate } from '~/types/child'
 import type { Database } from '~/types/database'
 import type { User } from '@supabase/supabase-js'
 
-export const useChildren = () => {
+export const useChild = () => {
   const supabase = useSupabaseClient<Database>()
   const queryClient = useQueryClient()
   const { t } = useI18n()
@@ -24,7 +24,7 @@ export const useChildren = () => {
     const userRef = toRef(user)
     const enabled = computed(() => !!userRef.value?.id)
     return useQuery({
-      queryKey: ['get-childrens', userRef],
+      queryKey: ['get-children', userRef],
       enabled,
       queryFn: async () => {
         if (!userRef.value?.id) throw new Error('User ID is required for fetching children')
@@ -32,55 +32,54 @@ export const useChildren = () => {
           .from('children')
           .select('*')
           .eq('user_id', userRef.value.id)
-        return req.data as Children[]
+        return req.data as Child[]
       },
     })
   }
 
-  function useAddChildrenMutation(user: MaybeRef<User | null>) {
+  function useAddChildMutation(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
     return useMutation({
-      mutationFn: async (child: ChildrenInsert) => {
+      mutationFn: async (child: ChildInsert) => {
         await supabase
           .from('children')
           .insert(child)
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-childrens', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
       },
     })
   }
 
-  function useUpdateChildrenMutation(user: MaybeRef<User | null>) {
+  function useUpdateChildMutation(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
     return useMutation({
-      mutationFn: async (children: ChildrenUpdate) => {
+      mutationFn: async (child: ChildUpdate) => {
         if (!userRef.value?.id) throw new Error('User ID is required for updating')
-        if (!children.id) throw new Error('Children ID is required for updating')
+        if (!child.id) throw new Error('Child ID is required for updating')
         await supabase
           .from('children')
-          .update(children)
-          .eq('id', children.id)
+          .update(child)
+          .eq('id', child.id)
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-childrens', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
       },
     })
   }
 
-  function useDeleteChildrenMutation(user: MaybeRef<User | null>) {
+  function useDeleteChildMutation(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
     return useMutation({
-      mutationFn: async (childrenId: string) => {
-        if (!userRef.value?.id) throw new Error('User ID is required for deleting children')
-        const req = await supabase
+      mutationFn: async (childId: string) => {
+        if (!userRef.value?.id) throw new Error('User ID is required for deleting child')
+        await supabase
           .from('children')
           .delete()
-          .eq('id', childrenId)
-        console.log('Delete response:', req)
+          .eq('id', childId)
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-childrens', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
       },
     })
   }
@@ -88,8 +87,8 @@ export const useChildren = () => {
   return {
     avatarColors,
     useChildrenQuery,
-    useAddChildrenMutation,
-    useUpdateChildrenMutation,
-    useDeleteChildrenMutation,
+    useAddChildMutation,
+    useUpdateChildMutation,
+    useDeleteChildMutation,
   }
 }
