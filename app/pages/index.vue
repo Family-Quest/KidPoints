@@ -13,7 +13,7 @@
 
       <!-- Illustration -->
       <img
-        src="/images/kids_welcome.svg"
+        src="/kids_welcome.svg"
         alt="Enfants heureux"
         class="w-full max-w-md mx-auto drop-shadow-md"
       >

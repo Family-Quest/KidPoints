@@ -120,8 +120,8 @@ const { value: status } = useField<'todo' | 'in_progress' | 'done'>('status')
 
 const onSubmit = handleSubmit(() => {
   updateTask({
-    ...task.value,
     ...values,
+    id: task.value.id,
   })
 })
 

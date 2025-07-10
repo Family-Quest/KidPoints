@@ -28,10 +28,13 @@ export default defineNuxtConfig({
     bundle: {
       optimizeTranslationDirective: false,
     },
+    strategy: 'no_prefix',
     defaultLocale: 'fr',
+    detectBrowserLanguage: false,
+    langDir: 'locales',
     locales: [
-      { code: 'fr', name: 'Français', file: 'fr.json' },
-      { code: 'en', name: 'English', file: 'en.json' },
+      { code: 'fr', file: 'fr.json', name: 'Français' },
+      { code: 'en', file: 'en.json', name: 'English' },
     ],
   },
   supabase: {

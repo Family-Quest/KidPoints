@@ -29,72 +29,124 @@
     <div v-else>
       <!-- Section : À faire ou en cours -->
       <div>
-        <h3 class="text-xl font-semibold mb-2 text-purple-700">
-          {{ $t('task.list.active') }}
-        </h3>
         <div
-          v-if="activeTasks?.length"
-          class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
+          class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
         >
-          <TaskCard
-            v-for="task in activeTasks"
-            :key="task.id"
-            :task="task"
-          />
-        </div>
-        <div
-          v-else-if="activeTasks?.length === 0"
-          class="text-gray-400 italic text-center py-8"
-        >
-          {{ $t('task.list.no_active_tasks_found') }}
-        </div>
-      </div>
+          <!-- Colonne TODO -->
+          <div>
+            <h4 class="text-lg font-semibold text-gray-600 mb-2">
+              {{ $t('task.status_todo') }}
+            </h4>
+            <div
+              v-if="todoTasks.length"
+              class="flex flex-col gap-4"
+            >
+              <TaskCard
+                v-for="task in todoTasks"
+                :key="task.id"
+                :task="task"
+              />
+            </div>
+            <div
+              v-else
+              class="text-sm italic text-gray-400"
+            >
+              {{ $t('task.list.no_todo_tasks_found') }}
+            </div>
+          </div>
 
-      <!-- Completed tasks toggle -->
-      <div
-        v-if="completedTasks?.length"
-        class="mt-6 text-center"
-      >
-        <button
-          class="inline-flex items-center gap-1 text-purple-700 font-medium hover:underline"
-          @click="showCompleted = !showCompleted"
-        >
-          <span>
-            {{ showCompleted ? $t('task.list.hide_completed') : $t('task.list.show_completed') }}
-          </span>
-          <svg
-            class="w-4 h-4 transform transition-transform duration-200"
-            :class="{ 'rotate-180': showCompleted }"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
+          <!-- Colonne IN_PROGRESS -->
+          <div>
+            <h4 class="text-lg font-semibold text-gray-600 mb-2">
+              {{ $t('task.status_in_progress') }}
+            </h4>
+            <div
+              v-if="inProgressTasks.length"
+              class="flex flex-col gap-4"
+            >
+              <TaskCard
+                v-for="task in inProgressTasks"
+                :key="task.id"
+                :task="task"
+              />
+            </div>
+            <div
+              v-else
+              class="text-sm italic text-gray-400"
+            >
+              {{ $t('task.list.no_in_progress_tasks_found') }}
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Section : Tâches complétées -->
-      <transition name="fade-slide">
+      <div
+        v-if="completedTasks?.length"
+        class="mt-6"
+      >
+        <h4 class="text-lg font-semibold text-gray-600 mb-2">
+          {{ $t('task.list.completed') }}
+        </h4>
+
         <div
-          v-if="showCompleted && completedTasks?.length"
-          class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-4 opacity-90"
+          class="grid grid-cols-1 md:grid-cols-3 gap-2 opacity-90"
         >
           <TaskCard
-            v-for="task in completedTasks"
+            v-for="task in visibleCompletedTasks"
             :key="task.id"
             :task="task"
             compact
             class="opacity-70 grayscale transition hover:grayscale-0"
           />
         </div>
-      </transition>
+
+        <!-- Toggle button -->
+        <div
+          v-if="otherCompletedTasks?.length"
+          class="mt-4 text-center"
+        >
+          <button
+            class="inline-flex items-center gap-1 text-purple-700 font-medium hover:underline"
+            @click="showCompleted = !showCompleted"
+          >
+            <span>
+              {{ showCompleted ? $t('task.list.hide_completed') : $t('task.list.show_completed') }}
+            </span>
+            <svg
+              class="w-4 h-4 transform transition-transform duration-200"
+              :class="{ 'rotate-180': showCompleted }"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          <!-- Section : Tâches complétées -->
+          <transition name="fade-slide">
+            <div
+              v-if="showCompleted && otherCompletedTasks?.length"
+              class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-4 opacity-90"
+            >
+              <TaskCard
+                v-for="task in otherCompletedTasks"
+                :key="task.id"
+                :task="task"
+                compact
+                class="opacity-70 grayscale transition hover:grayscale-0"
+              />
+            </div>
+          </transition>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -109,8 +161,17 @@ const showCompleted = ref(false)
 
 const { data: allTasks, isLoading } = useActiveTasksQuery(user)
 
-const activeTasks = computed(() => allTasks.value?.filter(task => task.status === TaskStatusEnum.TODO || task.status === TaskStatusEnum.IN_PROGRESS))
+const todoTasks = computed(() =>
+  allTasks.value?.filter(task => task.status === TaskStatusEnum.TODO) ?? [],
+)
+
+const inProgressTasks = computed(() =>
+  allTasks.value?.filter(task => task.status === TaskStatusEnum.IN_PROGRESS) ?? [],
+)
+
 const completedTasks = computed(() => allTasks.value?.filter(task => task.status === TaskStatusEnum.DONE))
+const visibleCompletedTasks = computed(() => completedTasks.value?.slice(0, 3))
+const otherCompletedTasks = computed(() => completedTasks.value?.slice(3))
 </script>
 
 <style scoped>

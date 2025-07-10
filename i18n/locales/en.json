@@ -1,79 +1,159 @@
 {
+  "home": {
+    "title": "Welcome to KidPoints!",
+    "subtitle": "A fun way to get your kids involved in their daily tasks.",
+    "cta_register": "Create an account",
+    "cta_login": "Log in",
+    "features": {
+      "rewards": "Motivating rewards",
+      "rewards_desc": "Kids earn points they can exchange for surprises.",
+      "tasks": "Fun missions",
+      "tasks_desc": "Turn tasks into simple, engaging quests.",
+      "parents": "A clear parent space",
+      "parents_desc": "Easily manage kids, tasks, and rewards."
+    }
+  },
   "signup": {
-    "title": "Créer un compte",
-    "email": "Adresse email",
-    "password": "Mot de passe",
-    "submit": "Créer mon compte",
-    "loading": "Création en cours...",
-    "emailSent": "Un email de confirmation vous a été envoyé.",
-    "alreadyAccount": "Vous avez déjà un compte ?",
-    "loginLink": "Connectez-vous ici",
+    "title": "Create an account",
+    "email": "Email address",
+    "password": "Password",
+    "submit": "Create my account",
+    "loading": "Creating account...",
+    "emailSent": "A confirmation email has just been sent to you.",
+    "alreadyAccount": "Already have an account?",
+    "loginLink": "Log in here",
     "errors": {
-      "email": "Adresse email invalide",
-      "password": "Le mot de passe doit contenir au moins 8 caractères"
+      "email": "Invalid email address",
+      "password": "Password must be at least 8 characters long"
     }
   },
   "onboarding": {
-    "title": "Bienvenue !",
-    "lastName": "Votre nom de famille",
-    "childrenTitle": "Ajoutez vos enfants",
-    "childName": "Prénom de l'enfant",
-    "addChild": "Ajouter un enfant",
-    "removeChild": "Supprimer",
-    "save": "Continuer"
+    "title": "Welcome!",
+    "lastName": "Your last name",
+    "childrenTitle": "Add your children here",
+    "childName": "Child's first name",
+    "addChild": "Add a child",
+    "removeChild": "Remove",
+    "save": "Save"
   },
   "dashboard": {
-    "title": "Tableau de bord",
-    "parentInfo": "Informations du parent",
-    "name": "Nom",
+    "title": "Dashboard",
+    "parentInfo": "Parent information",
+    "name": "Name",
     "email": "Email",
-    "language": "Langue",
-    "unknown": "Inconnue",
-    "childrenTitle": "Mes enfants",
-    "noChildren": "Aucun enfant n'a encore été ajouté.",
-    "level": "Niveau",
+    "language": "Language",
+    "unknown": "Unknown",
+    "childrenTitle": "My children",
+    "noChildren": "You haven't added any children yet.",
+    "level": "Level",
     "points": "Points",
-    "loading": "Chargement..."
+    "loading": "Please wait..."
   },
   "about": {
-    "title": "À propos de KidPoints",
-    "description": "KidPoints est une application conçue pour aider les familles à organiser les tâches quotidiennes des enfants de manière ludique et motivante.",
-    "missionTitle": "Notre mission",
-    "missionContent": "Encourager l'autonomie, la responsabilisation et le travail d'équipe en famille grâce à un système de points et de récompenses.",
-    "featuresTitle": "Fonctionnalités",
+    "title": "About KidPoints",
+    "description": "KidPoints is an app designed to help families organize kids' daily tasks in a fun and motivating way.",
+    "missionTitle": "Our mission",
+    "missionContent": "Encourage autonomy, responsibility, and family teamwork through a playful system of points and rewards.",
+    "featuresTitle": "Features",
     "features": {
-      "chores": "Gestion des tâches personnalisées",
-      "rewards": "Système de récompenses",
-      "levels": "Niveaux et progression",
-      "family": "Multi-enfants et multi-profils"
+      "chores": "Custom task management",
+      "rewards": "Rewards system",
+      "levels": "Levels and progression",
+      "family": "Multi-child and multi-profile"
     }
   },
   "parent": {
-    "profile": "Profil",
-    "children": "Enfants",
-    "tasks": "Tâches"
+    "profile": "Profile",
+    "children": "Children",
+    "tasks": "Tasks",
+    "child": {
+      "points": "Points",
+      "level": "Level"
+    }
   },
   "form": {
     "name": "Name",
     "language": "Language",
     "save": "Save",
-    "childName": "Child name",
+    "childName": "Child's name",
     "add": "Add",
     "delete": "Delete"
   },
   "colors": {
-    "red": "Rouge 🔴",
-    "blue": "Bleu 🔵",
-    "green": "Vert 🟢",
-    "yellow": "Jaune 🟡",
-    "purple": "Violet 🟣",
-    "pink": "Rose 🌸",
-    "orange": "Orange 🟠",
-    "brown": "Marron 🟤",
-    "gray": "Gris ⚪"
+    "red": "Red 🐞",
+    "blue": "Blue 🐬",
+    "green": "Green 🐢",
+    "yellow": "Yellow 🐥",
+    "purple": "Purple 🍇",
+    "pink": "Pink 🦄",
+    "orange": "Orange 🦊",
+    "brown": "Brown 🐻",
+    "gray": "Gray 🐘"
   },
   "language": {
-    "fr": "Français",
-    "en": "Anglais"
+    "fr": "French",
+    "en": "English"
+  },
+  "task": {
+    "title": "Task title",
+    "description": "Description",
+    "points": "Points",
+    "status": "Status",
+    "status_todo": "To do",
+    "status_in_progress": "In progress",
+    "status_done": "Done",
+    "add": "Add a task",
+    "save": "Save",
+    "delete": "Delete",
+    "list": {
+      "title": "Tasks",
+      "no_tasks_found": "No tasks found",
+      "active": "To do or in progress",
+      "completed": "Completed",
+      "hide_completed": "Show fewer completed tasks",
+      "show_completed": "Show more completed tasks",
+      "no_active_tasks_found": "No tasks to do or in progress",
+      "no_completed_tasks_found": "No completed tasks",
+      "no_todo_tasks_found": "No tasks to do",
+      "no_in_progress_tasks_found": "No tasks in progress"
+    },
+    "unassigned": "Unassigned",
+    "validate": "Validate",
+    "validate_confirm_title": "Confirm validation",
+    "validate_confirm_message": "Are you sure you want to validate this task?"
+  },
+  "child": {
+    "list": {
+      "no_children_found": "No children found",
+      "title": "Children"
+    },
+    "points": "Points:",
+    "level": "Level:"
+  },
+  "auth": {
+    "signup": "Create an account here",
+    "no_account": "Not registered yet?",
+    "login_title": "Parent login",
+    "password_strength": "Password strength:"
+  },
+  "header": {
+    "dashboard": "Dashboard",
+    "family_management": "Family management",
+    "logout": "Logout",
+    "login": "Login",
+    "signup": "Create an account"
+  },
+  "cancel": "Cancel",
+  "validating": "Validating...",
+  "confirm": "Confirm",
+  "validation": {
+    "parent_name_required": "Name is required",
+    "parent_name_max_length": "Name must not exceed 100 characters",
+    "child_name_required": "Name is required",
+    "child_name_max_length": "Name must not exceed 100 characters",
+    "task_title_required": "Title is required",
+    "task_title_max_length": "Title must not exceed 100 characters",
+    "task_description_max_length": "Description must not exceed 500 characters",
+    "task_points_min": "Task must be worth at least 1 point"
   }
 }

@@ -41,35 +41,6 @@
         </p>
       </div>
 
-      <!-- Langue -->
-      <div>
-        <label
-          class="block mb-1 font-semibold text-gray-700"
-          for="language"
-        >
-          {{ $t('form.language') }}
-        </label>
-        <select
-          id="language"
-          v-model="language"
-          class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900
-                 focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-600 transition"
-        >
-          <option
-            v-for="lang in parentLanguagesValues"
-            :key="lang"
-            :value="lang"
-            v-text="$t(`language.${lang}`)"
-          />
-        </select>
-        <p
-          v-if="languageErrorMessage"
-          class="mt-1 text-sm text-red-600 font-medium"
-        >
-          {{ $t(languageErrorMessage) }}
-        </p>
-      </div>
-
       <!-- Submit -->
       <button
         type="submit"
@@ -86,8 +57,7 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
-import { parentUpdateSchema, parentLanguagesValues } from '~/types/parent'
-import type { ParentLanguages } from '~/types/parent'
+import { parentUpdateSchema } from '~/types/parent'
 
 const { useParentMutation, useParentQuery } = useParent()
 const user = useSupabaseUser()
@@ -102,7 +72,6 @@ const { handleSubmit } = useForm({
 })
 
 const { value: name, errorMessage: nameErrorMessage } = useField<string>('name')
-const { value: language, errorMessage: languageErrorMessage } = useField<ParentLanguages>('language')
 
 const submit = handleSubmit((formValues) => {
   mutate(formValues)
@@ -111,7 +80,6 @@ const submit = handleSubmit((formValues) => {
 watch(isFetched, () => {
   if (currentParent.value) {
     name.value = currentParent.value.name
-    language.value = currentParent.value.language
   }
 }, { immediate: true })
 </script>

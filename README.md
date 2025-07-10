@@ -1,6 +1,6 @@
 # KidPoints
 
-![KidPoints Logo](./app/icons/logo.png)
+![KidPoints Logo](./public/logo.png)
 
 KidPoints est une application web ludique pour aider les parents à gérer les tâches et les récompenses de leurs enfants.  
 Chaque enfant peut accomplir des tâches, gagner des points, monter de niveau, et obtenir des récompenses.  
