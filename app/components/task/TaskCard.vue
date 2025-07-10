@@ -1,20 +1,25 @@
 <!-- components/tasks/TaskCard.vue -->
 <template>
   <div
-    class="rounded-xl shadow-md p-4 flex cursor-pointer hover:shadow-xl transition-shadow gap-4 items-center"
+    class="rounded-xl shadow-md p-4 flex flex-col md:flex-row gap-4 cursor-pointer hover:shadow-xl transition-shadow"
     :class="statusBgClass"
   >
-    <!-- Bouton validation à gauche -->
-    <TaskValidator
-      v-if="task.status === TaskStatusEnum.IN_PROGRESS"
-      :task="task"
-    />
+    <!-- TaskValidator : bas centré sur mobile, à gauche centré verticalement sur md+ -->
+    <div class="order-2 md:order-1 flex-shrink-0 flex justify-center md:justify-start md:items-center">
+      <TaskValidator
+        v-if="task.status === TaskStatusEnum.IN_PROGRESS"
+        :task="task"
+      />
+    </div>
 
     <!-- Contenu de la carte -->
-    <div class="flex flex-col flex-1 gap-2">
+    <div class="flex flex-col flex-1 gap-2 order-1 md:order-2">
       <!-- En-tête -->
       <div class="flex justify-between items-center">
-        <h3 class="text-lg font-semibold truncate max-w-[65%]">
+        <h3
+          class="text-lg font-semibold break-words max-w-[65%] line-clamp-2 leading-snug"
+          :title="task.title"
+        >
           {{ task.title }}
         </h3>
         <div class="flex items-center gap-2">
@@ -29,7 +34,10 @@
       </div>
 
       <!-- Description -->
-      <p class="text-gray-600 line-clamp-2">
+      <p
+        class="text-gray-600 line-clamp-2"
+        :title="task.description"
+      >
         {{ task.description }}
       </p>
 

@@ -36,6 +36,9 @@
             class="hover:underline"
           >{{ $t('header.signup') }}</NuxtLink>
         </template>
+
+        <!-- Intégration du sélecteur de langue -->
+        <AppLanguageSwitcher />
       </nav>
     </div>
   </header>
