@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white shadow-lg rounded-2xl p-8 max-w-md mx-auto min-h-19">
     <h2 class="text-2xl font-extrabold text-purple-700 mb-6 text-center">
-      {{ $t('family.title') }}
+      {{ $t('family.title', { family: familyStore.name || '...' }) }}
     </h2>
 
     <div

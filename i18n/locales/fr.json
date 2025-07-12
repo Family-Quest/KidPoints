@@ -43,7 +43,6 @@
     "code_placeholder": "Entrez le code de la famille"
   },
   "dashboard": {
-    "title": "Tableau de bord",
     "parentInfo": "Informations du parent",
     "name": "Nom",
     "email": "E-mail",
@@ -53,7 +52,9 @@
     "noChildren": "Vous n'avez encore ajouté aucun enfant.",
     "level": "Niveau",
     "points": "Points",
-    "loading": "Patientez..."
+    "loading": "Patientez...",
+    "title": "Tableau de bord — Famille {family}",
+    "subtitle": "Suivez les points, les niveaux et les tâches de vos enfants au quotidien ✨"
   },
   "about": {
     "title": "À propos de KidPoints",
@@ -69,7 +70,7 @@
     }
   },
   "parent": {
-    "profile": "Profil",
+    "profile": "Mon Profil",
     "children": "Enfants",
     "tasks": "Tâches",
     "child": {
@@ -172,7 +173,11 @@
     "copied": "Copié",
     "copy": "Copier",
     "code": "Code de la famille",
-    "title": "Famille",
+    "title": "Famille {family}",
     "members": "Membres"
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "about": "À propos"
   }
 }

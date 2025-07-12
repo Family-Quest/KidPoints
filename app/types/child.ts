@@ -39,7 +39,9 @@ type ChildAvatarColor = {
     label: `colors.${Lowercase<key>}`
     bg: `bg-${Lowercase<key>}-200`
     text: `text-${Lowercase<key>}-700`
+    border: `border-${Lowercase<key>}-300`
     fadeBg: string
+    emoji: string
   }
 }
 
@@ -56,14 +58,28 @@ const fadeBgMap: Record<AvatarColor, string> = {
   brown: 'rgba(150, 90, 50, 0.15)', // approximation
 }
 
+const emojiMap: Record<AvatarColor, string> = {
+  red: '🍓',
+  blue: '💧',
+  green: '🍀',
+  yellow: '🌟',
+  purple: '🪄',
+  pink: '🌸',
+  gray: '🎈',
+  orange: '🍊',
+  brown: '🧸',
+}
+
 const childAvatarColors = Object.fromEntries(
   avatarColors.map(color => [
     color.toUpperCase(),
     {
-      label: `colors.${color}`,
-      bg: `bg-${color}-200`,
-      text: `text-${color}-700`,
+      label: `colors.${color}` as const,
+      bg: `bg-${color}-200` as const,
+      text: `text-${color}-700` as const,
+      border: `border-${color}-300` as const,
       fadeBg: fadeBgMap[color],
+      emoji: emojiMap[color],
     },
   ]),
 ) as unknown as ChildAvatarColor
@@ -88,4 +104,14 @@ export const getAvatarClasses = (color: string): string => {
 
 export const getAvatarFadeBg = (color: AvatarColor): { backgroundColor: string } => {
   return { backgroundColor: childAvatarColors[color.toUpperCase() as ColorKey].fadeBg }
+}
+
+export const getAvatarEmoji = (color: string): string => {
+  const c = (color ?? 'gray').toLowerCase() as AvatarColor
+  return childAvatarColors[c.toUpperCase() as ColorKey]?.emoji ?? '🎈'
+}
+
+export const getAvatarBorderColor = (color: string): string => {
+  const c = (color ?? 'gray').toLowerCase() as AvatarColor
+  return childAvatarColors[c.toUpperCase() as ColorKey]?.border ?? 'border-gray-300'
 }

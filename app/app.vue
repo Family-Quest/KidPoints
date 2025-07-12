@@ -18,6 +18,7 @@ onMounted(async () => {
     if (family?.id) {
       familyStore.setId(family.id)
       familyStore.setCode(family.join_code)
+      familyStore.setName(family.name)
     }
   }
 })

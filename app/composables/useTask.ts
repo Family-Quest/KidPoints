@@ -10,17 +10,16 @@ export const useTask = () => {
 
   function useTasksQuery(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
-    const familyId = computed(() => familyStore.id)
 
     const enabled = computed(() => {
-      return !!userRef.value && !!familyId.value
+      return !!userRef.value && !!familyStore.id
     })
 
     return useQuery<TaskAssignment[]>({
-      queryKey: ['get-tasks', familyId],
+      queryKey: ['get-tasks', familyStore.id],
       enabled,
       queryFn: async () => {
-        if (!familyId.value) throw new Error('Family ID is required for fetching tasks')
+        if (!familyStore.id) throw new Error('Family ID is required for fetching tasks')
 
         const { data: tasks, error } = await supabase
           .from('tasks')
@@ -57,8 +56,6 @@ export const useTask = () => {
   }
 
   function useCreateTaskMutation(user: MaybeRef<User | null>) {
-    const familyId = computed(() => familyStore.id)
-
     const userRef = toRef(user)
     return useMutation({
       mutationFn: async (task: TaskInsert) => {
@@ -70,14 +67,14 @@ export const useTask = () => {
         return data
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyId] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyStore.id] })
       },
     })
   }
 
   function useUpdateTaskMutation(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
-    const familyId = computed(() => familyStore.id)
+
     return useMutation({
       mutationFn: async (task: TaskUpdate) => {
         if (!userRef.value?.id) throw new Error('User ID is required for updating tasks')
@@ -90,14 +87,14 @@ export const useTask = () => {
         return data
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyId] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyStore.id] })
       },
     })
   }
 
   function useDeleteTaskMutation(user: MaybeRef<User | null>) {
-    const familyId = computed(() => familyStore.id)
     const userRef = toRef(user)
+
     return useMutation({
       mutationFn: async (taskId: string) => {
         if (!userRef.value?.id) throw new Error('User ID is required for deleting tasks')
@@ -109,14 +106,14 @@ export const useTask = () => {
         return data
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyId] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyStore.id] })
       },
     })
   }
 
   function useDeleteAssignationMutation(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
-    const familyId = computed(() => familyStore.id)
+
     return useMutation({
       mutationFn: async (taskId: string) => {
         if (!userRef.value?.id) throw new Error('User ID is required for deleting task assignments')
@@ -128,14 +125,14 @@ export const useTask = () => {
         return data
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyId] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyStore.id] })
       },
     })
   }
 
   function useUpsertTaskAssignmentMutation(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
-    const familyId = computed(() => familyStore.id)
+
     return useMutation({
       mutationFn: async (payload: {
         task_id: string
@@ -154,14 +151,14 @@ export const useTask = () => {
         return data
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyId] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyStore.id] })
       },
     })
   }
 
   function useValidateTaskMutation(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
-    const familyId = computed(() => familyStore.id)
+
     return useMutation({
       mutationFn: async (taskId: string) => {
         if (!userRef.value?.id) throw new Error('Not logged in')
@@ -169,7 +166,7 @@ export const useTask = () => {
         if (error) throw error
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyId] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', familyStore.id] })
         queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
       },
     })

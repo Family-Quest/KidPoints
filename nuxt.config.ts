@@ -1,3 +1,5 @@
+import pkg from './package.json'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -18,6 +20,7 @@ export default defineNuxtConfig({
     public: {
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseKey: process.env.SUPABASE_KEY,
+      version: pkg.version,
     },
   },
   compatibilityDate: '2025-05-15',
@@ -53,15 +56,15 @@ export default defineNuxtConfig({
         'text-red-700', 'text-blue-700', 'text-green-700',
 
         // Avatar colors bg + text (enfants)
-        'bg-red-200', 'text-red-700',
-        'bg-blue-200', 'text-blue-700',
-        'bg-green-200', 'text-green-700',
-        'bg-purple-200', 'text-purple-700',
-        'bg-orange-200', 'text-orange-700',
-        'bg-pink-200', 'text-pink-700',
-        'bg-yellow-200', 'text-yellow-700',
-        'bg-gray-200', 'text-gray-700',
-        'bg-brown-200', 'text-brown-700',
+        'bg-red-200', 'text-red-700', 'border-red-300',
+        'bg-blue-200', 'text-blue-700', 'border-blue-300',
+        'bg-green-200', 'text-green-700', 'border-green-300',
+        'bg-purple-200', 'text-purple-700', 'border-purple-300',
+        'bg-orange-200', 'text-orange-700', 'border-orange-300',
+        'bg-pink-200', 'text-pink-700', 'border-pink-300',
+        'bg-yellow-200', 'text-yellow-700', 'border-yellow-300',
+        'bg-gray-200', 'text-gray-700', 'border-gray-300',
+        'bg-brown-200', 'text-brown-700', 'border-brown-300',
 
         // Autres bg/text/hover/border/shadow etc. (ta liste actuelle)
         'bg-red-400', 'bg-blue-400', 'bg-green-400', 'bg-yellow-400',

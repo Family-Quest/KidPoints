@@ -9,7 +9,7 @@ export const useFamily = () => {
 
   function useFamilyQuery(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
-    const enabled = computed(() => !!userRef.value?.id)
+    const enabled = computed(() => !!userRef.value?.id && !!familyStore.id)
 
     return useQuery({
       queryKey: ['get-family', userRef],
@@ -25,6 +25,7 @@ export const useFamily = () => {
         if (error) throw error
         familyStore.setId(data.id)
         familyStore.setCode(data.join_code)
+        familyStore.setName(data.name)
         return data
       },
     })
@@ -56,6 +57,7 @@ export const useFamily = () => {
 
         familyStore.setId(family.id)
         familyStore.setCode(family.join_code)
+        familyStore.setName(family.name)
 
         return family
       },
@@ -93,6 +95,7 @@ export const useFamily = () => {
 
         familyStore.setId(family.id)
         familyStore.setCode(family.join_code)
+        familyStore.setName(family.name)
 
         return family
       },

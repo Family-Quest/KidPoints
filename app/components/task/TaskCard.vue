@@ -1,7 +1,7 @@
 <!-- components/tasks/TaskCard.vue -->
 <template>
   <div
-    class="rounded-xl shadow-md p-4 flex flex-col md:flex-row gap-4 cursor-pointer hover:shadow-xl transition-shadow"
+    class="rounded-xl border border-1 border-gray-500 shadow-md p-4 flex flex-col md:flex-row gap-4 cursor-pointer hover:shadow-xl transition-shadow"
     :class="statusBgClass"
   >
     <!-- TaskValidator : bas centré sur mobile, à gauche centré verticalement sur md+ -->

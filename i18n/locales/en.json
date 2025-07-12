@@ -1,16 +1,16 @@
 {
   "home": {
     "title": "Welcome to KidPoints!",
-    "subtitle": "A fun way to get your kids involved in their daily tasks.",
+    "subtitle": "A fun way to engage your children in their daily chores.",
     "cta_register": "Create an account",
     "cta_login": "Log in",
     "features": {
       "rewards": "Motivating rewards",
       "rewards_desc": "Kids earn points they can exchange for surprises.",
       "tasks": "Fun missions",
-      "tasks_desc": "Turn tasks into simple, engaging quests.",
+      "tasks_desc": "Turn chores into simple and motivating quests.",
       "parents": "A clear parent space",
-      "parents_desc": "Easily manage kids, tasks, and rewards."
+      "parents_desc": "Easily manage your children, their tasks, and rewards."
     }
   },
   "signup": {
@@ -18,26 +18,31 @@
     "email": "Email address",
     "password": "Password",
     "submit": "Create my account",
-    "loading": "Creating account...",
+    "loading": "Creating...",
     "emailSent": "A confirmation email has just been sent to you.",
     "alreadyAccount": "Already have an account?",
     "loginLink": "Log in here",
     "errors": {
       "email": "Invalid email address",
-      "password": "Password must be at least 8 characters long"
-    }
+      "password": "Password must be at least 8 characters"
+    },
+    "checkEmail": "Check your email address"
   },
   "onboarding": {
     "title": "Welcome!",
-    "lastName": "Your last name",
-    "childrenTitle": "Add your children here",
-    "childName": "Child's first name",
-    "addChild": "Add a child",
-    "removeChild": "Remove",
-    "save": "Save"
+    "name_placeholder": "Your first name or nickname",
+    "create_family": "Create a family",
+    "join_family": "Join a family",
+    "family_name_placeholder": "Family name",
+    "join_code_placeholder": "Family code",
+    "submit": "Continue",
+    "loading": "Saving...",
+    "error_invalid_code": "Invalid code",
+    "create": "Create a family",
+    "join": "Join a family",
+    "code_placeholder": "Enter the family code"
   },
   "dashboard": {
-    "title": "Dashboard",
     "parentInfo": "Parent information",
     "name": "Name",
     "email": "Email",
@@ -47,19 +52,21 @@
     "noChildren": "You haven't added any children yet.",
     "level": "Level",
     "points": "Points",
-    "loading": "Please wait..."
+    "loading": "Please wait...",
+    "title": "Dashboard — Family {family}",
+    "subtitle": "Track your children's points, levels, and tasks daily ✨"
   },
   "about": {
     "title": "About KidPoints",
-    "description": "KidPoints is an app designed to help families organize kids' daily tasks in a fun and motivating way.",
+    "description": "KidPoints is an app designed to help families organize kids' daily chores in a fun and motivating way.",
     "missionTitle": "Our mission",
-    "missionContent": "Encourage autonomy, responsibility, and family teamwork through a playful system of points and rewards.",
+    "missionContent": "Encourage autonomy, responsibility, and family team spirit through a fun system of points and rewards.",
     "featuresTitle": "Features",
     "features": {
-      "chores": "Custom task management",
-      "rewards": "Rewards system",
+      "chores": "Customizable task management",
+      "rewards": "Reward system",
       "levels": "Levels and progression",
-      "family": "Multi-child and multi-profile"
+      "family": "Multi-children and multi-profiles"
     }
   },
   "parent": {
@@ -69,7 +76,8 @@
     "child": {
       "points": "Points",
       "level": "Level"
-    }
+    },
+    "name": "First name / Nickname"
   },
   "form": {
     "name": "Name",
@@ -123,16 +131,18 @@
     "validate_confirm_message": "Are you sure you want to validate this task?"
   },
   "child": {
+    "name": "Child's name",
     "list": {
       "no_children_found": "No children found",
       "title": "Children"
     },
     "points": "Points:",
-    "level": "Level:"
+    "level": "Level:",
+    "add": "Add a child"
   },
   "auth": {
     "signup": "Create an account here",
-    "no_account": "Not registered yet?",
+    "no_account": "Not signed up yet?",
     "login_title": "Parent login",
     "password_strength": "Password strength:"
   },
@@ -141,19 +151,33 @@
     "family_management": "Family management",
     "logout": "Logout",
     "login": "Login",
-    "signup": "Create an account"
+    "signup": "Create account"
   },
   "cancel": "Cancel",
   "validating": "Validating...",
   "confirm": "Confirm",
   "validation": {
-    "parent_name_required": "Name is required",
-    "parent_name_max_length": "Name must not exceed 100 characters",
     "child_name_required": "Name is required",
     "child_name_max_length": "Name must not exceed 100 characters",
     "task_title_required": "Title is required",
     "task_title_max_length": "Title must not exceed 100 characters",
     "task_description_max_length": "Description must not exceed 500 characters",
-    "task_points_min": "Task must be worth at least 1 point"
+    "task_points_min": "Task must be worth at least 1 point",
+    "parent_name_required": "Please enter your first name.",
+    "parent_name_max_length": "First name is too long.",
+    "family_name_required": "Please name your family.",
+    "family_name_max_length": "Family name is too long.",
+    "code_required": "Code must be 8 characters."
+  },
+  "family": {
+    "copied": "Copied",
+    "copy": "Copy",
+    "code": "Family code",
+    "title": "Family",
+    "members": "Members"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "about": "About"
   }
 }

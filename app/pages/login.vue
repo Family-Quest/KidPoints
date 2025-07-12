@@ -51,7 +51,11 @@
 </template>
 
 <script setup lang="ts">
+import type { Database } from '~/types/database'
+
 const { useParentQuery } = useParent()
+const familyStore = useFamilyStore()
+const supabase = useSupabaseClient<Database>()
 
 const user = useSupabaseUser()
 
@@ -78,6 +82,9 @@ const handleLogin = async () => {
 
   try {
     await login(email.value, password.value)
+    if (!familyStore.id) {
+      await loadFamilyData()
+    }
     redirect()
   }
   catch (err: unknown) {
@@ -91,6 +98,21 @@ const handleLogin = async () => {
   finally {
     loading.value = false
   }
+}
+
+async function loadFamilyData() {
+  if (!user.value?.id) return
+  const { data, error } = await supabase
+    .from('families')
+    .select('*, family_parents!inner(*)')
+    .eq('family_parents.parent_id', user.value?.id)
+    .single()
+
+  if (error) throw error
+
+  familyStore.setId(data.id)
+  familyStore.setCode(data.join_code)
+  familyStore.setName(data.name)
 }
 
 definePageMeta({ layout: 'auth' })
