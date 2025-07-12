@@ -12,8 +12,8 @@ export const useAuth = () => {
     const isProd = process.env.NODE_ENV === 'production'
 
     const redirectUrl = isProd
-      ? 'https://kids-points.netlify.app/onboarding'
-      : 'http://localhost:3000/onboarding'
+      ? 'https://kids-points.netlify.app/login'
+      : 'http://localhost:3000/login'
 
     const { error } = await supabase.auth.signUp({
       email,
