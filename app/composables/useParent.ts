@@ -10,7 +10,7 @@ export const useParent = () => {
 
   function useParentQuery(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
-    const enabled = computed(() => !!userRef.value?.id)
+    const enabled = computed(() => !!userRef.value?.id && !!familyStore.id)
     return useQuery({
       queryKey: ['get-parent', userRef],
       enabled,

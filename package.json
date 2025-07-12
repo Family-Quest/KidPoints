@@ -1,6 +1,6 @@
 {
   "name": "kidpoints",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Application Nuxt 4 avec Supabase pour gérer les tâches, points et niveaux des enfants",
   "type": "module",
   "private": true,
