@@ -154,12 +154,12 @@
 <script setup lang="ts">
 import { TaskStatusEnum } from '~/types/task'
 
-const { useActiveTasksQuery } = useTask()
+const { useTasksQuery } = useTask()
 const user = useSupabaseUser()
 
 const showCompleted = ref(false)
 
-const { data: allTasks, isLoading } = useActiveTasksQuery(user)
+const { data: allTasks, isLoading } = useTasksQuery(user)
 
 const todoTasks = computed(() =>
   allTasks.value?.filter(task => task.status === TaskStatusEnum.TODO) ?? [],

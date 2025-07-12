@@ -36,7 +36,7 @@
           @click="onAddChild"
         >
           <span class="text-3xl font-bold mb-1">+</span>
-          <span>{{ $t('onboarding.addChild') }}</span>
+          <span>{{ $t('child.add') }}</span>
         </button>
       </div>
     </div>
@@ -48,6 +48,7 @@ import { getRandomColor, getRandomName } from '~/types/child'
 
 const { useAddChildMutation, useChildrenQuery } = useChild()
 const user = useSupabaseUser()
+const familyStore = useFamilyStore()
 
 const { data: childrens, isLoading } = useChildrenQuery(user)
 const { mutate: addChild, isPending } = useAddChildMutation(user)
@@ -55,7 +56,7 @@ const { mutate: addChild, isPending } = useAddChildMutation(user)
 const onAddChild = () => {
   if (!user.value?.id) return
   addChild({
-    user_id: user.value.id,
+    family_id: familyStore.id,
     name: getRandomName(),
     avatar_color: getRandomColor(),
   })

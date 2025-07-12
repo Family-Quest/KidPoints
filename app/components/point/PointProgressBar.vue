@@ -6,14 +6,26 @@
     />
   </div>
   <div class="text-xs text-gray-600 mt-1">
-    {{ points }} / {{ nextLevel }} XP
+    {{ pointsInCurrentLevel }} / {{ pointsNeededForNextLevel }} XP
   </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{ points: number, level: number }>()
-const nextLevel = computed(() => 10 + props.level * 10)
-const progress = computed(() =>
-  Math.min(100, (props.points / nextLevel.value) * 100),
-)
+
+function pointsForLevel(level: number): number {
+  return 2 * (level - 1) ** 2
+}
+
+const pointsCurrentLevel = pointsForLevel(props.level)
+const pointsNextLevel = pointsForLevel(props.level + 1)
+
+const pointsInCurrentLevel = Math.max(0, props.points - pointsCurrentLevel)
+const pointsNeededForNextLevel = pointsNextLevel - pointsCurrentLevel
+
+const progress = computed(() => {
+  const range = pointsNeededForNextLevel
+  const progressPoints = pointsInCurrentLevel
+  return Math.min(100, Math.max(0, (progressPoints / range) * 100))
+})
 </script>

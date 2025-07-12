@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 export const useParent = () => {
   const supabase = useSupabaseClient<Database>()
   const queryClient = useQueryClient()
+  const familyStore = useFamilyStore()
 
   function useParentQuery(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
@@ -15,12 +16,33 @@ export const useParent = () => {
       enabled,
       queryFn: async () => {
         if (!userRef.value?.id) throw new Error('User ID is required for fetching profile')
-        const req = await supabase
+        const { data: parent, error } = await supabase
           .from('parents')
           .select('*')
           .eq('id', userRef.value.id)
           .single()
-        return req.data as Parent
+        if (error) throw error
+        return parent as Parent
+      },
+    })
+  }
+
+  function useParentsByFamilyQuery(user: MaybeRef<User | null>) {
+    const userRef = toRef(user)
+    const enabled = computed(() => !!userRef.value?.id)
+
+    return useQuery<Parent[]>({
+      queryKey: ['get-family-parents', familyStore.id],
+      enabled,
+      queryFn: async () => {
+        if (!userRef.value?.id) throw new Error('User ID is required to fetch family parents')
+
+        const { data, error } = await supabase
+          .from('parents')
+          .select('id, name, language, created_at')
+
+        if (error) throw error
+        return data ?? []
       },
     })
   }
@@ -30,11 +52,15 @@ export const useParent = () => {
     return useMutation({
       mutationFn: async (parent: ParentUpdate) => {
         if (!userRef.value?.id) throw new Error('User ID is required for updating profile')
-        await supabase.from('parents').update(parent).eq('id', userRef.value.id)
+        const { error } = await supabase.from('parents').update(parent).eq('id', userRef.value.id)
+        if (error) throw error
       },
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: ['get-parent', userRef],
+        })
+        queryClient.invalidateQueries({
+          queryKey: ['get-family-parents', familyStore.id],
         })
       },
     })
@@ -42,6 +68,7 @@ export const useParent = () => {
 
   return {
     useParentQuery,
+    useParentsByFamilyQuery,
     useParentMutation,
   }
 }

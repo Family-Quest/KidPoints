@@ -1,23 +1,37 @@
-<!-- components/children/ChildCard.vue -->
 <template>
   <div
-    class="bg-white rounded-xl shadow-md p-5 flex flex-col items-center text-center hover:shadow-xl transition-shadow gap-2"
+    class="relative rounded-2xl border-2 p-4 flex flex-col items-center text-center hover:scale-[1.02] hover:shadow-xl transition-transform duration-300 gap-2 bg-white"
+    :class="borderColorClasses"
   >
+    <div class="flex justify-between w-full mb-2">
+      <span>
+        {{ getAvatarEmoji(child.avatar_color) }}
+      </span>
+      <div class="text-xs font-bold bg-yellow-200 text-gray-900 px-2 py-1 rounded-full shadow">
+        🏅 {{ $t('child.level') }} {{ child.level }}
+      </div>
+    </div>
+
     <div
-      class="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mb-4 select-none"
+      class="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold mb-2 text-white shadow-inner"
       :class="avatarClasses"
     >
-      {{ initials }}
+      <span>{{ getInitials(child.name) }}</span>
     </div>
-    <h3 class="text-xl font-semibold truncate">
-      {{ child.name }}
-    </h3>
-    <p class="text-purple-600 font-medium">
-      {{ $t('child.points') }} {{ child.points }}
-    </p>
-    <p class="text-gray-500 text-sm">
-      {{ $t('child.level') }} {{ child.level }}
-    </p>
+
+    <div class="flex justify-between w-full">
+      <!-- Nom -->
+      <h3 class="font-semibold truncate text-gray-800 items-center">
+        {{ child.name }}
+      </h3>
+
+      <!-- Points -->
+      <p class="text-purple-600 font-medium">
+        {{ $t('child.points') }} {{ child.points }}
+      </p>
+    </div>
+
+    <!-- Barre d'XP -->
     <PointProgressBar
       :points="child.points"
       :level="child.level"
@@ -26,43 +40,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Child } from '~/types/child'
+import type { AvatarColor, Child } from '~/types/child'
+import { getAvatarClasses, getInitials, getAvatarEmoji, getAvatarBorderColor } from '~/types/child'
 
-const props = defineProps<{
-  child: Child
-}>()
-
-const initials = computed(() => {
-  if (!props.child.name) return ''
-  const parts = props.child.name.trim().split(' ')
-  if (parts.length === 1 && parts[0]) return parts[0].substring(0, 2).toUpperCase()
-  if (parts.length >= 2 && parts[0] && parts[1]) return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase()
-  return ''
-})
-
-const avatarClasses = computed(() => {
-  const color = props.child.avatar_color
-  const colorBgMap: Record<string, string> = {
-    red: 'bg-red-200',
-    blue: 'bg-blue-200',
-    green: 'bg-green-200',
-    yellow: 'bg-yellow-200',
-    purple: 'bg-purple-200',
-    pink: 'bg-pink-200',
-    gray: 'bg-gray-200',
-    orange: 'bg-orange-200',
-  }
-  const colorTextMap: Record<string, string> = {
-    red: 'text-red-700',
-    blue: 'text-blue-700',
-    green: 'text-green-700',
-    yellow: 'text-yellow-700',
-    purple: 'text-purple-700',
-    pink: 'text-pink-700',
-    gray: 'text-gray-700',
-    orange: 'text-orange-700',
-  }
-
-  return `${colorBgMap[color] || 'bg-gray-200'} ${colorTextMap[color] || 'text-gray-700'}`
-})
+const props = defineProps<{ child: Child }>()
+const child = toRef(props, 'child')
+const avatarClasses = computed(() => getAvatarClasses(child.value.avatar_color as AvatarColor))
+const borderColorClasses = computed(() => getAvatarBorderColor(child.value.avatar_color as AvatarColor))
 </script>

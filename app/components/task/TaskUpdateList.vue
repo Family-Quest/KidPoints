@@ -23,9 +23,9 @@
         {{ $t('task.list.active') }}
       </h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <template v-if="activeTasks.length">
+        <template v-if="todoOrInProgressTasks.length">
           <TaskUpdateCard
-            v-for="task in activeTasks"
+            v-for="task in todoOrInProgressTasks"
             :key="task.id"
             :task="task"
           />
@@ -77,7 +77,7 @@
     <transition name="fade-slide">
       <div
         v-if="showCompleted"
-        class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 opacity-60"
+        class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 opacity-60"
       >
         <TaskCard
           v-for="task in completedTasks"
@@ -93,15 +93,16 @@
 import { getRandomTask, TaskStatusEnum } from '~/types/task'
 import type { TaskStatus } from '~/types/task'
 
-const { useActiveTasksQuery, useCreateTaskMutation } = useTask()
+const { useTasksQuery, useCreateTaskMutation } = useTask()
 const user = useSupabaseUser()
+const familyStore = useFamilyStore()
 
-const { data: allTasks, isLoading } = useActiveTasksQuery(user)
+const { data: allTasks, isLoading } = useTasksQuery(user)
 const { mutate: createTask, isPending } = useCreateTaskMutation(user)
 
 const showCompleted = ref(false)
 
-const activeTasks = computed(() =>
+const todoOrInProgressTasks = computed(() =>
   allTasks.value?.filter(task =>
     ([
       TaskStatusEnum.TODO,
@@ -118,8 +119,9 @@ const onAddTask = () => {
   if (!user.value?.id) return
   const task = getRandomTask()
   createTask({
-    created_by: user.value.id,
     ...task,
+    family_id: familyStore.id,
+    created_by: user.value.id,
   })
 }
 </script>

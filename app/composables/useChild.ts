@@ -6,19 +6,6 @@ import type { User } from '@supabase/supabase-js'
 export const useChild = () => {
   const supabase = useSupabaseClient<Database>()
   const queryClient = useQueryClient()
-  const { t } = useI18n()
-
-  const avatarColors = [
-    { value: 'red', label: t('colors.red') },
-    { value: 'blue', label: t('colors.blue') },
-    { value: 'green', label: t('colors.green') },
-    { value: 'yellow', label: t('colors.yellow') },
-    { value: 'purple', label: t('colors.purple') },
-    { value: 'pink', label: t('colors.pink') },
-    { value: 'orange', label: t('colors.orange') },
-    { value: 'brown', label: t('colors.brown') },
-    { value: 'gray', label: t('colors.gray') },
-  ]
 
   function useChildrenQuery(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
@@ -28,11 +15,11 @@ export const useChild = () => {
       enabled,
       queryFn: async () => {
         if (!userRef.value?.id) throw new Error('User ID is required for fetching children')
-        const req = await supabase
+        const { data: children, error } = await supabase
           .from('children')
           .select('*')
-          .eq('user_id', userRef.value.id)
-        return req.data as Child[]
+        if (error) throw error
+        return children as Child[]
       },
     })
   }
@@ -41,9 +28,10 @@ export const useChild = () => {
     const userRef = toRef(user)
     return useMutation({
       mutationFn: async (child: ChildInsert) => {
-        await supabase
+        const { error } = await supabase
           .from('children')
           .insert(child)
+        if (error) throw error
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
@@ -57,10 +45,11 @@ export const useChild = () => {
       mutationFn: async (child: ChildUpdate) => {
         if (!userRef.value?.id) throw new Error('User ID is required for updating')
         if (!child.id) throw new Error('Child ID is required for updating')
-        await supabase
+        const { error } = await supabase
           .from('children')
           .update(child)
           .eq('id', child.id)
+        if (error) throw error
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
@@ -73,10 +62,11 @@ export const useChild = () => {
     return useMutation({
       mutationFn: async (childId: string) => {
         if (!userRef.value?.id) throw new Error('User ID is required for deleting child')
-        await supabase
+        const { error } = await supabase
           .from('children')
           .delete()
           .eq('id', childId)
+        if (error) throw error
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
@@ -85,7 +75,6 @@ export const useChild = () => {
   }
 
   return {
-    avatarColors,
     useChildrenQuery,
     useAddChildMutation,
     useUpdateChildMutation,

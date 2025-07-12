@@ -20,12 +20,8 @@ export type Task = Tables<'tasks'>
 export type TaskInsert = TablesInsert<'tasks'>
 export type TaskUpdate = TablesUpdate<'tasks'>
 
-export type TaskAssignment = Tables<'task_assignments'> & {
-  child?: Child | null
-}
-
-export type ActiveTask = Task & {
-  assignment: TaskAssignment | null
+export type TaskAssignment = Task & {
+  child: Child | null
 }
 
 export const taskUpdateSchema = z.object({
@@ -100,4 +96,22 @@ const randomTasks = [
 
 export function getRandomTask() {
   return randomTasks[Math.floor(Math.random() * randomTasks.length)]
+}
+
+export const taskStatusStyles: Record<TaskStatus, {
+  bg: string
+  text: string
+}> = {
+  [TaskStatusEnum.TODO]: {
+    bg: 'bg-red-100',
+    text: 'text-red-700',
+  },
+  [TaskStatusEnum.IN_PROGRESS]: {
+    bg: 'bg-blue-100',
+    text: 'text-blue-700',
+  },
+  [TaskStatusEnum.DONE]: {
+    bg: 'bg-green-100',
+    text: 'text-green-700',
+  },
 }

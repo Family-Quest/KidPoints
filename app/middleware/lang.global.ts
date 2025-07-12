@@ -7,8 +7,9 @@ export default defineNuxtRouteMiddleware(async () => {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
   const nuxtApp = useNuxtApp()
+  const familyStore = useFamilyStore()
 
-  if (user.value) {
+  if (user.value && familyStore.id) {
     const { data, error } = await supabase
       .from('parents')
       .select('language')

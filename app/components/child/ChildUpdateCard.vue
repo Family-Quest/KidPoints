@@ -1,13 +1,13 @@
 <template>
   <div
     class="p-5 rounded-2xl shadow-md relative hover:shadow-lg transition-shadow space-y-4 border border-gray-100"
-    :style="fadeBackgroundStyle"
+    :style="getAvatarFadeBg(child.avatar_color as AvatarColor)"
   >
     <!-- Nom de l’enfant -->
     <div>
       <input
         v-model="name"
-        :placeholder="$t('onboarding.childName')"
+        :placeholder="$t('child.name')"
         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
       >
       <p
@@ -25,10 +25,11 @@
     >
       <option
         v-for="color in avatarColors"
-        :key="color.value"
-        :value="color.value"
+        :key="color"
+        :style="getAvatarFadeBg(color)"
+        :value="color"
       >
-        {{ color.label }}
+        {{ $t(`colors.${color}`) }}
       </option>
     </select>
 
@@ -70,10 +71,10 @@ import { useField, useForm } from 'vee-validate'
 import { TrashIcon } from '@heroicons/vue/24/solid'
 import { toTypedSchema } from '@vee-validate/zod'
 
-import { childUpdateSchema } from '~/types/child'
-import type { Child, ChildUpdate } from '~/types/child'
+import { avatarColors, childUpdateSchema, getAvatarFadeBg } from '~/types/child'
+import type { AvatarColor, Child, ChildUpdate } from '~/types/child'
 
-const { avatarColors, useDeleteChildMutation, useUpdateChildMutation } = useChild()
+const { useDeleteChildMutation, useUpdateChildMutation } = useChild()
 const user = useSupabaseUser()
 
 const { mutate: deleteChild } = useDeleteChildMutation(user)
@@ -94,23 +95,6 @@ const { values, handleSubmit } = useForm<ChildUpdate>({
 
 const { value: name, errorMessage: nameErrorMessage } = useField<string>('name')
 const { value: avatarColor } = useField<string>('avatar_color')
-
-const fadeBackgroundStyle = computed(() => {
-  const colorMap: Record<string, string> = {
-    red: 'rgba(239, 68, 68, 0.07)', // Tailwind red-500
-    blue: 'rgba(59, 130, 246, 0.07)', // Tailwind blue-500
-    green: 'rgba(34, 197, 94, 0.07)', // Tailwind green-500
-    yellow: 'rgba(234, 179, 8, 0.07)', // Tailwind yellow-500
-    purple: 'rgba(168, 85, 247, 0.07)', // Tailwind purple-500
-    pink: 'rgba(236, 72, 153, 0.07)', // Tailwind pink-500
-    gray: 'rgba(107, 114, 128, 0.07)', // Tailwind gray-500
-    orange: 'rgba(249, 115, 22, 0.07)', // Tailwind orange-500
-  }
-
-  return {
-    backgroundColor: colorMap[avatarColor.value] ?? 'rgba(0,0,0,0.03)',
-  }
-})
 
 const onSubmit = handleSubmit(() => {
   updateChild({

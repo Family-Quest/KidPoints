@@ -50,10 +50,10 @@
 </template>
 
 <script setup lang="ts">
-import type { ActiveTask } from '~/types/task'
+import type { TaskAssignment } from '~/types/task'
 
 const props = defineProps<{
-  task: ActiveTask
+  task: TaskAssignment
 }>()
 
 const { useValidateTaskMutation } = useTask()
