@@ -16,8 +16,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint": "eslint . --ext .js,.ts,.vue",
+    "lint:fix": "eslint . --fix --ext .js,.ts,.vue"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
