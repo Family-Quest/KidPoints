@@ -45,17 +45,31 @@
       <!-- Submit -->
       <button
         type="submit"
-        class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded"
-        :disabled="loading"
+        class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+        :disabled="loading || emailSent"
       >
-        {{ loading ? $t('signup.loading') : $t('signup.submit') }}
+        {{ emailSent ? $t('signup.checkEmail') : (loading ? $t('signup.loading') : $t('signup.submit')) }}
       </button>
     </form>
 
     <p
       v-if="emailSent"
-      class="text-sm text-center text-gray-600"
+      class="text-green-700 bg-green-100 border border-green-300 rounded p-3 text-center text-base flex items-center justify-center gap-2 mt-4 animate-fadeIn"
     >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M5 13l4 4L19 7"
+        />
+      </svg>
       {{ $t('signup.emailSent') }}
     </p>
 
@@ -101,7 +115,7 @@ const onSubmit = handleSubmit(async (values) => {
     emailSent.value = true
   }
   catch (err) {
-    console.error(err)
+    console.error('Erreur signup:', err)
   }
   finally {
     loading.value = false
@@ -110,3 +124,14 @@ const onSubmit = handleSubmit(async (values) => {
 
 definePageMeta({ layout: 'auth' })
 </script>
+
+<style scoped>
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in forwards;
+}
+</style>

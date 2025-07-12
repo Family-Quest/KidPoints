@@ -21,7 +21,7 @@
         {{ selectedInitials }}
       </div>
       <span class="truncate max-w-[100px] font-semibold">
-        {{ selectedChild?.name || $t('task.unassigned') }}
+        {{ task.child?.name || $t('task.unassigned') }}
       </span>
       <svg
         v-if="!isDisabled"
@@ -67,7 +67,7 @@
         >
           <div
             class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold select-none"
-            :class="getAvatarClasses(child.avatar_color ?? 'gray')"
+            :class="getAvatarClasses(child.avatar_color as AvatarColor)"
           >
             {{ getInitials(child.name) }}
           </div>
@@ -79,14 +79,19 @@
 </template>
 
 <script setup lang="ts">
-import type { ActiveTask, TaskAssignment } from '~/types/task'
+import { getAvatarClasses, getInitials } from '~/types/child'
+import type { AvatarColor } from '~/types/child'
+import type { TaskAssignment } from '~/types/task'
 
 const props = defineProps<{
-  task: ActiveTask
-  taskAssignment?: TaskAssignment | null
+  task: TaskAssignment
 }>()
 
-const isDisabled = computed(() => props.task.status === 'done')
+const task = toRef(props, 'task')
+
+const selectedChildId = ref<string | null>(task.value.child?.id || null)
+const isDisabled = computed(() => task.value.status === 'done')
+const avatarClasses = computed(() => getAvatarClasses(task.value.child?.avatar_color as AvatarColor || 'gray' as AvatarColor))
 
 const { useChildrenQuery } = useChild()
 const { useUpsertTaskAssignmentMutation, useDeleteAssignationMutation } = useTask()
@@ -98,17 +103,7 @@ const { mutate: deleteAssignation } = useDeleteAssignationMutation(user)
 
 const dropdownOpen = ref(false)
 const dropdownRef = ref<HTMLElement | null>(null)
-const selectedChildId = ref<string | null>(props.taskAssignment?.child?.id || null)
-
-const selectedChild = computed(() => children.value?.find(c => c.id === selectedChildId.value) ?? null)
-
-const selectedInitials = computed(() => {
-  if (!selectedChild.value?.name) return '?'
-  const parts = selectedChild.value.name.trim().split(' ')
-  if (parts.length === 1 && parts[0]) return parts[0].substring(0, 2).toUpperCase()
-  if (parts.length >= 2 && parts[0] && parts[1]) return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase()
-  return ''
-})
+const selectedInitials = computed(() => task.value.child ? getInitials(task.value.child.name) : '?')
 
 const toggleDropdown = () => {
   if (isDisabled.value) return
@@ -124,15 +119,16 @@ document.addEventListener('click', onClickOutside)
 
 const selectChild = (childId: string | null) => {
   if (isDisabled.value) return
+  if (!task.value) return
 
   if (childId === null) {
     selectedChildId.value = null
-    deleteAssignation(props.task.id)
+    deleteAssignation(task.value.id)
   }
   else {
     selectedChildId.value = childId
     updateAssignation({
-      task_id: props.task.id,
+      task_id: task.value.id,
       child_id: childId,
     })
   }
@@ -143,30 +139,4 @@ const selectChild = (childId: string | null) => {
 onBeforeUnmount(() => {
   document.removeEventListener('click', onClickOutside)
 })
-
-const getInitials = (name: string) => {
-  const parts = name.trim().split(' ')
-  if (parts.length === 1 && parts[0]) return parts[0].substring(0, 2).toUpperCase()
-  if (parts.length >= 2 && parts[0] && parts[1]) return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase()
-  return ''
-}
-
-const avatarBgMap: Record<string, string> = {
-  red: 'bg-red-200 text-red-700',
-  blue: 'bg-blue-200 text-blue-700',
-  green: 'bg-green-200 text-green-700',
-  yellow: 'bg-yellow-200 text-yellow-700',
-  purple: 'bg-purple-200 text-purple-700',
-  pink: 'bg-pink-200 text-pink-700',
-  gray: 'bg-gray-200 text-gray-700',
-  orange: 'bg-orange-200 text-orange-700',
-}
-
-const avatarClasses = computed(() => {
-  return avatarBgMap[selectedChild.value?.avatar_color || 'gray'] || avatarBgMap.gray
-})
-
-const getAvatarClasses = (color: string) => {
-  return avatarBgMap[color] ?? avatarBgMap.gray
-}
 </script>

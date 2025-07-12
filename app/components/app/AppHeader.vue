@@ -10,14 +10,18 @@
 
       <nav class="flex items-center gap-4 text-sm">
         <template v-if="user">
-          <NuxtLink
-            to="/dashboard"
-            class="hover:underline"
-          >{{ $t('header.dashboard') }}</NuxtLink>
-          <NuxtLink
-            to="/family"
-            class="hover:underline"
-          >{{ $t('header.family_management') }}</NuxtLink>
+          <template v-if="familyStore.id">
+            <NuxtLink
+              to="/dashboard"
+              class="hover:underline"
+            >{{ $t('header.dashboard') }}</NuxtLink>
+            <NuxtLink
+              to="/family"
+              class="hover:underline"
+            >{{ $t('header.family_management') }}</NuxtLink>
+            <!-- Intégration du sélecteur de langue -->
+            <AppLanguageSwitcher />
+          </template>
           <button
             class="bg-white text-purple-600 px-3 py-1 rounded hover:bg-purple-100"
             @click="onLogout"
@@ -36,9 +40,6 @@
             class="hover:underline"
           >{{ $t('header.signup') }}</NuxtLink>
         </template>
-
-        <!-- Intégration du sélecteur de langue -->
-        <AppLanguageSwitcher />
       </nav>
     </div>
   </header>
@@ -46,6 +47,7 @@
 
 <script setup lang="ts">
 const user = useSupabaseUser()
+const familyStore = useFamilyStore()
 const { logout } = useAuth()
 
 const onLogout = async () => {

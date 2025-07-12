@@ -46,7 +46,6 @@
         <ChildAssignmentDropdown
           class="min-w-0 flex-shrink"
           :task="task"
-          :task-assignment="task.assignment"
         />
         <div
           class="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold select-none bg-purple-200 text-purple-700 border border-purple-300"
@@ -59,25 +58,29 @@
 </template>
 
 <script setup lang="ts">
-import { TaskStatusEnum } from '~/types/task'
-import type { ActiveTask } from '~/types/task'
+import { TaskStatusEnum, taskStatusStyles, taskStatusValues } from '~/types/task'
+import type { TaskAssignment, TaskStatus } from '~/types/task'
 
 const props = defineProps<{
-  task: ActiveTask
+  task: TaskAssignment
 }>()
 
-const statusBgMap: Record<string, string> = {
-  todo: 'bg-red-100',
-  in_progress: 'bg-blue-100',
-  done: 'bg-green-100',
-}
+const normalizedStatus = computed(() => {
+  const status = props.task.status
+  return taskStatusValues.includes(status as TaskStatus)
+    ? (status as TaskStatus)
+    : null
+})
 
-const statusTextMap: Record<string, string> = {
-  todo: 'text-red-700',
-  in_progress: 'text-blue-700',
-  done: 'text-green-700',
-}
+const statusStyles = computed(() =>
+  normalizedStatus.value
+    ? taskStatusStyles[normalizedStatus.value]
+    : {
+        bg: 'bg-gray-100',
+        text: 'text-gray-700',
+      },
+)
 
-const statusBgClass = computed(() => statusBgMap[props.task.status] || 'bg-gray-100')
-const statusTextClass = computed(() => statusTextMap[props.task.status] || 'text-gray-700')
+const statusBgClass = computed(() => statusStyles.value.bg)
+const statusTextClass = computed(() => statusStyles.value.text)
 </script>

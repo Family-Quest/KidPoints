@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-lg rounded-2xl p-8 max-w-md mx-auto">
+  <div class="bg-white shadow-lg rounded-2xl p-8 max-w-md mx-auto min-h-19">
     <h2 class="text-2xl font-extrabold text-purple-700 mb-6 text-center">
       {{ $t('parent.profile') }}
     </h2>
@@ -22,13 +22,13 @@
           class="block mb-1 font-semibold text-gray-700"
           for="name"
         >
-          {{ $t('onboarding.lastName') }}
+          {{ $t('parent.name') }}
         </label>
         <input
           id="name"
           v-model="name"
           type="text"
-          :placeholder="$t('onboarding.lastName')"
+          :placeholder="$t('parent.name')"
           class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400
                  focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-600 transition"
           autocomplete="off"

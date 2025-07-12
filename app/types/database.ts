@@ -17,32 +17,94 @@ export type Database = {
       children: {
         Row: {
           avatar_color: string
+          family_id: string
           id: string
           level: number
           name: string
           points: number
-          user_id: string
         }
         Insert: {
           avatar_color?: string
+          family_id: string
           id?: string
           level?: number
           name?: string
           points?: number
-          user_id: string
         }
         Update: {
           avatar_color?: string
+          family_id?: string
           id?: string
           level?: number
           name?: string
           points?: number
-          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "children_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "children_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      families: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          join_code: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          join_code?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          join_code?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "families_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "parents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      family_parents: {
+        Row: {
+          family_id: string
+          parent_id: string
+        }
+        Insert: {
+          family_id: string
+          parent_id: string
+        }
+        Update: {
+          family_id?: string
+          parent_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_parents_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "family_parents_parent_id_fkey"
+            columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "parents"
             referencedColumns: ["id"]
@@ -112,28 +174,28 @@ export type Database = {
       rewards: {
         Row: {
           cost_points: number
-          created_by: string
+          family_id: string
           id: string
           title: string
         }
         Insert: {
           cost_points: number
-          created_by: string
+          family_id: string
           id?: string
           title: string
         }
         Update: {
           cost_points?: number
-          created_by?: string
+          family_id?: string
           id?: string
           title?: string
         }
         Relationships: [
           {
-            foreignKeyName: "rewards_created_by_fkey"
-            columns: ["created_by"]
+            foreignKeyName: "rewards_family_id_fkey"
+            columns: ["family_id"]
             isOneToOne: false
-            referencedRelation: "parents"
+            referencedRelation: "families"
             referencedColumns: ["id"]
           },
         ]
@@ -170,34 +232,40 @@ export type Database = {
       }
       tasks: {
         Row: {
-          created_by: string
+          created_at: string | null
+          created_by: string | null
           description: string
+          family_id: string
           id: string
           is_active: boolean
-          order: number | null
           points: number
+          sort_order: number | null
           status: Database["public"]["Enums"]["task_status"]
           title: string
           validated_at: string | null
         }
         Insert: {
-          created_by: string
+          created_at?: string | null
+          created_by?: string | null
           description?: string
+          family_id: string
           id?: string
           is_active?: boolean
-          order?: number | null
           points?: number
+          sort_order?: number | null
           status?: Database["public"]["Enums"]["task_status"]
           title?: string
           validated_at?: string | null
         }
         Update: {
-          created_by?: string
+          created_at?: string | null
+          created_by?: string | null
           description?: string
+          family_id?: string
           id?: string
           is_active?: boolean
-          order?: number | null
           points?: number
+          sort_order?: number | null
           status?: Database["public"]["Enums"]["task_status"]
           title?: string
           validated_at?: string | null
@@ -210,6 +278,13 @@ export type Database = {
             referencedRelation: "parents"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "tasks_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
@@ -217,6 +292,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_join_code: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_family_by_code: {
+        Args: { code_input: string }
+        Returns: {
+          created_at: string
+          created_by: string | null
+          id: string
+          join_code: string
+          name: string
+        }[]
+      }
       validate_task: {
         Args: { p_task_id: string }
         Returns: undefined

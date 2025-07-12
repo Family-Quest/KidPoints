@@ -25,16 +25,22 @@
     "errors": {
       "email": "Adresse e-mail invalide",
       "password": "Le mot de passe doit contenir au moins 8 caractères"
-    }
+    },
+    "checkEmail": "Vérifier votre adresse mail"
   },
   "onboarding": {
     "title": "Bienvenue !",
-    "lastName": "Votre nom de famille",
-    "childrenTitle": "Ajoutez vos enfants ici",
-    "childName": "Prénom de l'enfant",
-    "addChild": "Ajouter un enfant",
-    "removeChild": "Supprimer",
-    "save": "Enregistrer"
+    "name_placeholder": "Votre prénom ou surnom",
+    "create_family": "Créer une famille",
+    "join_family": "Rejoindre une famille",
+    "family_name_placeholder": "Nom de la famille",
+    "join_code_placeholder": "Code de la famille",
+    "submit": "Continuer",
+    "loading": "Enregistrement...",
+    "error_invalid_code": "Code invalide",
+    "create": "Créer une famille",
+    "join": "Rejoindre une famille",
+    "code_placeholder": "Entrez le code de la famille"
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -69,7 +75,8 @@
     "child": {
       "points": "Points",
       "level": "Niveau"
-    }
+    },
+    "name": "Prénom / Surnom"
   },
   "form": {
     "name": "Nom",
@@ -123,12 +130,14 @@
     "validate_confirm_message": "Es-tu certain(e) de vouloir valider cette tâche ?"
   },
   "child": {
+    "name": "Nom de l'enfant",
     "list": {
       "no_children_found": "Aucun enfant trouvé",
       "title": "Enfants"
     },
     "points": "Points :",
-    "level": "Niveau :"
+    "level": "Niveau :",
+    "add": "Ajouter un enfant"
   },
   "auth": {
     "signup": "Créez un compte ici",
@@ -147,13 +156,23 @@
   "validating": "Validation...",
   "confirm": "Confirmer",
   "validation": {
-    "parent_name_required": "Le nom est obligatoire",
-    "parent_name_max_length": "Le nom ne doit pas dépasser 100 caractères",
     "child_name_required": "Le nom est obligatoire",
     "child_name_max_length": "Le nom ne doit pas dépasser 100 caractères",
     "task_title_required": "Le titre est obligatoire",
     "task_title_max_length": "Le titre ne doit pas dépasser 100 caractères",
     "task_description_max_length": "La description ne doit pas dépasser 500 caractères",
-    "task_points_min": "La tâche doit rapporter au moins 1 point"
+    "task_points_min": "La tâche doit rapporter au moins 1 point",
+    "parent_name_required": "Veuillez entrer votre prénom.",
+    "parent_name_max_length": "Le prénom est trop long.",
+    "family_name_required": "Veuillez nommer votre famille.",
+    "family_name_max_length": "Le nom de famille est trop long.",
+    "code_required": "Le code doit contenir 8 caractères."
+  },
+  "family": {
+    "copied": "Copié",
+    "copy": "Copier",
+    "code": "Code de la famille",
+    "title": "Famille",
+    "members": "Membres"
   }
 }
