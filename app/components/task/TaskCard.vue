@@ -1,19 +1,10 @@
-<!-- components/tasks/TaskCard.vue -->
 <template>
   <div
-    class="rounded-xl border border-1 border-gray-500 shadow-md p-4 flex flex-col md:flex-row gap-4 cursor-pointer hover:shadow-xl transition-shadow"
+    class="rounded-xl border border-gray-500 shadow-md p-4 flex flex-col gap-4 hover:shadow-xl transition-shadow"
     :class="statusBgClass"
   >
-    <!-- TaskValidator : bas centré sur mobile, à gauche centré verticalement sur md+ -->
-    <div class="order-2 md:order-1 flex-shrink-0 flex justify-center md:justify-start md:items-center">
-      <TaskValidator
-        v-if="task.status === TaskStatusEnum.IN_PROGRESS"
-        :task="task"
-      />
-    </div>
-
-    <!-- Contenu de la carte -->
-    <div class="flex flex-col flex-1 gap-2 order-1 md:order-2">
+    <!-- Contenu principal -->
+    <div class="flex flex-col flex-1 gap-2">
       <!-- En-tête -->
       <div class="flex justify-between items-center">
         <h3
@@ -41,7 +32,7 @@
         {{ task.description }}
       </p>
 
-      <!-- Bas de la carte -->
+      <!-- Affectation + Points -->
       <div class="flex items-center justify-between gap-3">
         <ChildAssignmentDropdown
           class="min-w-0 flex-shrink"
@@ -52,6 +43,14 @@
         >
           {{ task.points }}
         </div>
+      </div>
+
+      <!-- ✅ Bouton de validation en bas -->
+      <div
+        v-if="task.status === TaskStatusEnum.IN_PROGRESS"
+        class="pt-2 flex justify-center"
+      >
+        <TaskValidator :task="task" />
       </div>
     </div>
   </div>

@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 
 export const useFamilyStore = defineStore('family', {
   state: () => ({
-    id: '',
-    code: '',
-    name: '',
+    id: undefined as string | undefined,
+    code: undefined as string | undefined,
+    name: undefined as string | undefined,
   }),
   actions: {
     setId(newId: string) {
@@ -17,9 +17,9 @@ export const useFamilyStore = defineStore('family', {
       this.name = newName
     },
     clearFamily() {
-      this.id = ''
-      this.code = ''
-      this.name = ''
+      this.id = undefined
+      this.code = undefined
+      this.name = undefined
     },
   },
 })

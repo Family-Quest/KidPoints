@@ -32,7 +32,7 @@ export const useParent = () => {
     const enabled = computed(() => !!userRef.value?.id)
 
     return useQuery<Parent[]>({
-      queryKey: ['get-family-parents', familyStore.id],
+      queryKey: ['get-family-parents', userRef],
       enabled,
       queryFn: async () => {
         if (!userRef.value?.id) throw new Error('User ID is required to fetch family parents')
@@ -60,7 +60,7 @@ export const useParent = () => {
           queryKey: ['get-parent', userRef],
         })
         queryClient.invalidateQueries({
-          queryKey: ['get-family-parents', familyStore.id],
+          queryKey: ['get-family-parents', userRef],
         })
       },
     })

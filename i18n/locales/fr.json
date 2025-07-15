@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Bienvenue sur KidPoints !",
-    "subtitle": "Une manière ludique d’impliquer vos enfants dans leurs tâches du quotidien.",
+    "subtitle": "Une manière ludique d’impliquer vos enfants dans leurs tâches quotidiennes.",
     "cta_register": "Créer un compte",
     "cta_login": "Se connecter",
     "features": {
@@ -10,7 +10,7 @@
       "tasks": "Des missions amusantes",
       "tasks_desc": "Transformez les tâches en quêtes simples et motivantes.",
       "parents": "Un espace parent clair",
-      "parents_desc": "Gérez simplement vos enfants, leurs tâches et leurs récompenses."
+      "parents_desc": "Gérez facilement vos enfants, leurs tâches et leurs récompenses."
     }
   },
   "signup": {
@@ -26,7 +26,7 @@
       "email": "Adresse e-mail invalide",
       "password": "Le mot de passe doit contenir au moins 8 caractères"
     },
-    "checkEmail": "Vérifier votre adresse mail"
+    "checkEmail": "Vérifiez votre adresse e-mail"
   },
   "onboarding": {
     "title": "Bienvenue !",
@@ -36,7 +36,7 @@
     "family_name_placeholder": "Nom de la famille",
     "join_code_placeholder": "Code de la famille",
     "submit": "Continuer",
-    "loading": "Enregistrement...",
+    "loading": "Enregistrement en cours...",
     "error_invalid_code": "Code invalide",
     "create": "Créer une famille",
     "join": "Rejoindre une famille",
@@ -54,7 +54,7 @@
     "points": "Points",
     "loading": "Patientez...",
     "title": "Tableau de bord — Famille {family}",
-    "subtitle": "Suivez les points, les niveaux et les tâches de vos enfants au quotidien ✨"
+    "subtitle": "Suivez quotidiennement les points, niveaux et tâches de vos enfants ✨"
   },
   "about": {
     "title": "À propos de KidPoints",
@@ -63,14 +63,14 @@
     "missionContent": "Encourager l'autonomie, la responsabilisation et l'esprit d'équipe en famille grâce à un système ludique de points et récompenses.",
     "featuresTitle": "Fonctionnalités",
     "features": {
-      "chores": "Gestion des tâches personnalisées",
+      "chores": "Gestion personnalisée des tâches",
       "rewards": "Système de récompenses",
       "levels": "Niveaux et progression",
       "family": "Multi-enfants et multi-profils"
     }
   },
   "parent": {
-    "profile": "Mon Profil",
+    "profile": "Mon profil",
     "children": "Enfants",
     "tasks": "Tâches",
     "child": {
@@ -83,6 +83,7 @@
     "name": "Nom",
     "language": "Langue",
     "save": "Enregistrer",
+    "saved": "Enregistré !",
     "childName": "Nom de l'enfant",
     "add": "Ajouter",
     "delete": "Supprimer"
@@ -126,9 +127,18 @@
       "no_in_progress_tasks_found": "Aucune tâche en cours"
     },
     "unassigned": "Non attribuée",
-    "validate": "Valider",
+    "validate": "Valider la tâche",
+    "validate_short": "Valider",
     "validate_confirm_title": "Confirmer la validation",
-    "validate_confirm_message": "Es-tu certain(e) de vouloir valider cette tâche ?"
+    "validate_confirm_message": "Es-tu sûr(e) de vouloir valider cette tâche ?",
+    "validated_success": "Tâche validée ! ✅",
+    "validated_error": "Une erreur est survenue lors de la validation.",
+    "deletion_error": "Une erreur est survenue lors de la suppression.",
+    "deletion_success": "Tâche supprimée ! ❌",
+    "update_success": "Tâche mise à jour ! ✨",
+    "update_error": "Une erreur est survenue lors de la mise à jour.",
+    "creation_error": "Une erreur est survenue lors de la création.",
+    "creation_success": "Tâche créée ! 🎉"
   },
   "child": {
     "name": "Nom de l'enfant",
@@ -138,7 +148,13 @@
     },
     "points": "Points :",
     "level": "Niveau :",
-    "add": "Ajouter un enfant"
+    "add": "Ajouter un enfant",
+    "creation_success": "Enfant créé ! 🎉",
+    "creation_error": "Une erreur est survenue lors de la création.",
+    "update_success": "Enfant mis à jour ! ✨",
+    "update_error": "Une erreur est survenue lors de la mise à jour.",
+    "deletion_success": "Enfant supprimé ! ❌",
+    "deletion_error": "Une erreur est survenue lors de la suppression."
   },
   "auth": {
     "signup": "Créez un compte ici",
@@ -157,12 +173,12 @@
   "validating": "Validation...",
   "confirm": "Confirmer",
   "validation": {
-    "child_name_required": "Le nom est obligatoire",
-    "child_name_max_length": "Le nom ne doit pas dépasser 100 caractères",
-    "task_title_required": "Le titre est obligatoire",
-    "task_title_max_length": "Le titre ne doit pas dépasser 100 caractères",
-    "task_description_max_length": "La description ne doit pas dépasser 500 caractères",
-    "task_points_min": "La tâche doit rapporter au moins 1 point",
+    "child_name_required": "Le nom est obligatoire.",
+    "child_name_max_length": "Le nom ne doit pas dépasser 100 caractères.",
+    "task_title_required": "Le titre est obligatoire.",
+    "task_title_max_length": "Le titre ne doit pas dépasser 100 caractères.",
+    "task_description_max_length": "La description ne doit pas dépasser 500 caractères.",
+    "task_points_min": "La tâche doit rapporter au moins 1 point.",
     "parent_name_required": "Veuillez entrer votre prénom.",
     "parent_name_max_length": "Le prénom est trop long.",
     "family_name_required": "Veuillez nommer votre famille.",
