@@ -19,7 +19,7 @@ export const useTask = () => {
     })
 
     return useQuery<TaskAssignment[]>({
-      queryKey: ['get-tasks', userRef],
+      queryKey: ['get-tasks', userRef.value?.id],
       enabled,
       queryFn: async () => {
         if (!familyStore.id) throw new Error('Family ID is required for fetching tasks')
@@ -71,7 +71,7 @@ export const useTask = () => {
       },
       onSuccess: () => {
         toast.success(t('task.creation_success'))
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef.value?.id] })
       },
       onError: (error) => {
         toast.error(t('task.creation_error'))
@@ -96,7 +96,7 @@ export const useTask = () => {
       },
       onSuccess: () => {
         toast.success(t('task.update_success'))
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef.value?.id] })
       },
       onError: (error) => {
         toast.error(t('task.update_error'))
@@ -120,7 +120,7 @@ export const useTask = () => {
       },
       onSuccess: () => {
         toast.success(t('task.deletion_success'))
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef.value?.id] })
       },
       onError: (error) => {
         toast.error(t('task.deletion_error'))
@@ -143,7 +143,7 @@ export const useTask = () => {
         return data
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef.value?.id] })
       },
     })
   }
@@ -169,7 +169,7 @@ export const useTask = () => {
         return data
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef.value?.id] })
       },
     })
   }
@@ -185,8 +185,8 @@ export const useTask = () => {
       },
       onSuccess: () => {
         toast.success(t('task.validated_success'))
-        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef] })
-        queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-tasks', userRef.value?.id] })
+        queryClient.invalidateQueries({ queryKey: ['get-children', userRef.value?.id] })
       },
       onError: (error) => {
         toast.error(t('task.validated_error'))

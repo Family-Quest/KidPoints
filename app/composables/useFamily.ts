@@ -12,7 +12,7 @@ export const useFamily = () => {
     const enabled = computed(() => !!userRef.value?.id && !!familyStore.id)
 
     return useQuery({
-      queryKey: ['get-family', userRef],
+      queryKey: ['get-family', userRef.value?.id],
       enabled,
       queryFn: async () => {
         if (!userRef.value?.id) throw new Error('User ID is required to fetch family')
@@ -62,7 +62,7 @@ export const useFamily = () => {
         return family
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-family', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-family', userRef.value?.id] })
       },
     })
   }
@@ -101,7 +101,7 @@ export const useFamily = () => {
       },
 
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-family', userRef] })
+        queryClient.invalidateQueries({ queryKey: ['get-family', userRef.value?.id] })
       },
     })
   }
