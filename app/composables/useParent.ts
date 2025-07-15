@@ -12,7 +12,7 @@ export const useParent = () => {
     const userRef = toRef(user)
     const enabled = computed(() => !!userRef.value?.id && !!familyStore.id)
     return useQuery({
-      queryKey: ['get-parent', userRef],
+      queryKey: ['get-parent', userRef.value?.id],
       enabled,
       queryFn: async () => {
         if (!userRef.value?.id) throw new Error('User ID is required for fetching profile')
@@ -32,7 +32,7 @@ export const useParent = () => {
     const enabled = computed(() => !!userRef.value?.id)
 
     return useQuery<Parent[]>({
-      queryKey: ['get-family-parents', familyStore.id],
+      queryKey: ['get-family-parents', userRef.value?.id],
       enabled,
       queryFn: async () => {
         if (!userRef.value?.id) throw new Error('User ID is required to fetch family parents')
@@ -57,10 +57,10 @@ export const useParent = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ['get-parent', userRef],
+          queryKey: ['get-parent', userRef.value?.id],
         })
         queryClient.invalidateQueries({
-          queryKey: ['get-family-parents', familyStore.id],
+          queryKey: ['get-family-parents', userRef.value?.id],
         })
       },
     })

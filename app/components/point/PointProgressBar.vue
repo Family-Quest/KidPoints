@@ -12,20 +12,22 @@
 
 <script setup lang="ts">
 const props = defineProps<{ points: number, level: number }>()
+const points = toRef(props, 'points')
+const level = toRef(props, 'level')
 
 function pointsForLevel(level: number): number {
   return 2 * (level - 1) ** 2
 }
 
-const pointsCurrentLevel = pointsForLevel(props.level)
-const pointsNextLevel = pointsForLevel(props.level + 1)
+const pointsCurrentLevel = computed(() => pointsForLevel(level.value))
+const pointsNextLevel = computed(() => pointsForLevel(level.value + 1))
 
-const pointsInCurrentLevel = Math.max(0, props.points - pointsCurrentLevel)
-const pointsNeededForNextLevel = pointsNextLevel - pointsCurrentLevel
+const pointsInCurrentLevel = computed(() => Math.max(0, points.value - pointsCurrentLevel.value))
+const pointsNeededForNextLevel = computed(() => pointsNextLevel.value - pointsCurrentLevel.value)
 
 const progress = computed(() => {
-  const range = pointsNeededForNextLevel
-  const progressPoints = pointsInCurrentLevel
+  const range = pointsNeededForNextLevel.value
+  const progressPoints = pointsInCurrentLevel.value
   return Math.min(100, Math.max(0, (progressPoints / range) * 100))
 })
 </script>

@@ -1,17 +1,18 @@
 <template>
   <div>
+    <!-- Bouton de validation -->
     <button
-      class="w-10 h-10 flex items-center justify-center rounded-full bg-green-600 hover:bg-green-700 text-white transition"
-      :title="$t('task.validate') || 'Valider la tâche'"
+      class="flex items-center gap-2 px-3 py-2 rounded-full bg-green-100 text-green-700 hover:bg-green-200 transition border border-green-700"
+      :title="$t('task.validate')"
       @click="openConfirm = true"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
+        class="h-5 w-5"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
-        stroke-width="3"
+        stroke-width="2"
       >
         <path
           stroke-linecap="round"
@@ -19,8 +20,10 @@
           d="M5 13l4 4L19 7"
         />
       </svg>
+      <span>{{ $t('task.validate_short') || 'Valider' }}</span>
     </button>
 
+    <!-- Modal de confirmation -->
     <AppModal v-model="openConfirm">
       <template #title>
         {{ $t('task.validate_confirm_title') }}
@@ -58,7 +61,6 @@ const props = defineProps<{
 
 const { useValidateTaskMutation } = useTask()
 const user = useSupabaseUser()
-
 const { mutate: validateTask } = useValidateTaskMutation(user)
 
 const openConfirm = ref(false)

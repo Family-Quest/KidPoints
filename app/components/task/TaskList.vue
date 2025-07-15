@@ -97,7 +97,7 @@
             :key="task.id"
             :task="task"
             compact
-            class="opacity-70 grayscale transition hover:grayscale-0"
+            class="opacity-70"
           />
         </div>
 
@@ -141,7 +141,7 @@
                 :key="task.id"
                 :task="task"
                 compact
-                class="opacity-70 grayscale transition hover:grayscale-0"
+                class="opacity-70"
               />
             </div>
           </transition>

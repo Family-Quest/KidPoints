@@ -2,22 +2,26 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { Child, ChildInsert, ChildUpdate } from '~/types/child'
 import type { Database } from '~/types/database'
 import type { User } from '@supabase/supabase-js'
+import { toast } from 'vue-sonner'
 
 export const useChild = () => {
   const supabase = useSupabaseClient<Database>()
   const queryClient = useQueryClient()
 
+  const { t } = useI18n()
+
   function useChildrenQuery(user: MaybeRef<User | null>) {
     const userRef = toRef(user)
     const enabled = computed(() => !!userRef.value?.id)
     return useQuery({
-      queryKey: ['get-children', userRef],
+      queryKey: ['get-children', userRef.value?.id],
       enabled,
       queryFn: async () => {
         if (!userRef.value?.id) throw new Error('User ID is required for fetching children')
         const { data: children, error } = await supabase
           .from('children')
           .select('*')
+          .order('points', { ascending: false })
         if (error) throw error
         return children as Child[]
       },
@@ -34,7 +38,12 @@ export const useChild = () => {
         if (error) throw error
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
+        toast.success(t('child.creation_success'))
+        queryClient.invalidateQueries({ queryKey: ['get-children', userRef.value?.id] })
+      },
+      onError: (error) => {
+        toast.error(t('child.creation_error'))
+        console.error('Error creating child:', error)
       },
     })
   }
@@ -52,7 +61,12 @@ export const useChild = () => {
         if (error) throw error
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
+        toast.success(t('child.update_success'))
+        queryClient.invalidateQueries({ queryKey: ['get-children', userRef.value?.id] })
+      },
+      onError: (error) => {
+        toast.error(t('child.update_error'))
+        console.error('Error updating child:', error)
       },
     })
   }
@@ -69,7 +83,12 @@ export const useChild = () => {
         if (error) throw error
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['get-children', userRef] })
+        toast.success(t('child.deletion_success'))
+        queryClient.invalidateQueries({ queryKey: ['get-children', userRef.value?.id] })
+      },
+      onError: (error) => {
+        toast.error(t('child.deletion_error'))
+        console.error('Error deleting child:', error)
       },
     })
   }
